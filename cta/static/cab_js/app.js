@@ -887,7 +887,7 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.cab_types = Constants.Cab_types;
     
 
-    $scope.cab = function(id){
+    $scope.cabType = function(id){
      
 
     $http.get("/api/v1/cab?cab_type=" + id)
@@ -997,12 +997,19 @@ angular.module('comparetravel', ['angular.filter'])
     }
 
     $scope.editCab = function (cabData) {
-      $scope.cab=cabData;
+      $scope.ecab=cabData;
+      $scope.ecabDeals=cabData.deals;
+      $scope.ecabAmenities=cabData.amenities;
+      $scope.ecabImages=cabData.images;
+
+      console.log("Constants.Cab_types",Constants.Cab_types);
       
       for(i in Constants.Cab_types){
           if(cabData.cab_type==i){
 
-            $scope.cab.cab_type=Constants.Cab_types[i];
+            $scope.ecab.cab_type=Constants.Cab_types[i];
+            console.log("$scope.cab.cab_type",$scope.cab.cab_type);
+            console.log("$scope.ecab",$scope.ecab);
           }
       }
 
