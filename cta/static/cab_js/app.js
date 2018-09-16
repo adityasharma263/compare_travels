@@ -541,7 +541,7 @@ angular.module('comparetravel', ['angular.filter'])
         console.log("$scope.location",$scope.location);
         var redirectPage=function(){
           console.log("$scope.location array",$scope.loc);
-         window.open($scope.location + "/list?city=" + $scope.info.pickup_location + "&cab_type=" + id + "&pickup_time="  + $scope.info.pickup_time + "&drop_time=" + $scope.info.drop_time + "&pickup_lat="  + $scope.loc[0] + "&pickup_lon="  + $scope.loc[1]+ "&drop_lat="  + $scope.loc[2] + "&drop_lon="  + $scope.loc[3],'_self'); 
+         window.open($scope.location + "/list?city=" + $scope.info.pickup_location + "&cab_type=" + id + "&pickup_time="  + $scope.info.pickup_time + "&drop_time=" + $scope.info.drop_time + "&pickup_lat="  + $scope.loc[0] + "&pickup_lon="  + $scope.loc[1]+ "&drop_lat="  + "0" + "&drop_lon="  + "0",'_self'); 
         }
       } 
     
