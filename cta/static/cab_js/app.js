@@ -873,7 +873,66 @@ angular.module('comparetravel', ['angular.filter'])
 
   }])
 
-.controller('adminCabController',["$scope", "$http","Constants", function($scope, $http, Constants, $filter) {
+
+
+
+
+//--------------------cab detail/booking controller-----------------------  
+
+
+  .controller('detailController',["$scope", "$http","bank_type", function($scope, $http, bank_type, $filter) {
+    $scope.bank = bank_type.bank;
+    
+    $scope.cab= {}; // main cab model
+    $http({
+        method: 'GET',
+        url: '/api/v1/cab' 
+      }).then(function successCallback(response) {
+          $scope.cab= response.data.result.cabs;
+          console.log("$scope.bank",$scope.bank);
+          
+          console.log("cab data",$scope.cab);
+          // this callback will be called asynchronously
+          // when the response is available
+          getdeal();
+        }, function errorCallback(response) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+      })
+   
+      var getdeal=function(){
+        $scope.deal={};
+        $scope.cabs={};
+        var search =location.pathname;
+        var id = search.split("/");
+        $http({
+          method: 'GET',
+          url: '/api/v1/cab'
+        }).then(function successCallback(response) {
+            for(var i=0; i<response.data.result.cabs.length; i++){
+                for(var j=0; j<response.data.result.cabs[i].deals.length; j++){
+                    if(response.data.result.cabs[i].id==1 && response.data.result.cabs[i].deals[j].id==1){
+                        $scope.cabs =response.data.result.cabs[i];
+                        $scope.deal =response.data.result.cabs[i].deals[j];
+
+                        console.log("cab[]",$scope.cabs );         
+                        console.log("deal[]",$scope.deal );     
+                        
+                        return $scope.cabs,$scope.deal ;
+                        
+                        
+              }
+            }
+        }
+          }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+      }
+
+  }]) 
+
+  .controller('adminCabController',["$scope", "$http","Constants", function($scope, $http, Constants, $filter) {
     $scope.cab = {}; // main cab model
     $scope.cabImg = []; //for all images array
     $scope.images={}; //for one image
@@ -951,13 +1010,7 @@ angular.module('comparetravel', ['angular.filter'])
         function (req) {
          createToast("'Something went wrong!!!'","red");
         })
-      
     }
-
-    
-  
-  
-
 
     $scope.addImg=function(){
         $scope.cabImg.push($scope.images);
@@ -1013,72 +1066,56 @@ angular.module('comparetravel', ['angular.filter'])
           }
       }
 
-
-      
-
-
-
-
     }
-
-   
-
 
   }])
 
+  .controller("dashboardAmenityController", ["$scope", "$http", function ($scope, $http) {
+    $scope.disable_update = true;
+
+    $http.get("/api/v1/cab/amenity")
+      .then(function (res) {
+        $scope.amenity = res.data.result.amenities;
+        $scope.amenities = $scope.amenity[0]
+        delete $scope.amenities.id;
+        delete $scope.amenities.cab;
 
 
-//--------------------cab detail/booking controller-----------------------  
-
-
-  .controller('detailController',["$scope", "$http","bank_type", function($scope, $http, bank_type, $filter) {
-    $scope.bank = bank_type.bank;
-    
-    $scope.cab= {}; // main cab model
-    $http({
-        method: 'GET',
-        url: '/api/v1/cab' 
-      }).then(function successCallback(response) {
-          $scope.cab= response.data.result.cabs;
-          console.log("$scope.bank",$scope.bank);
-          
-          console.log("cab data",$scope.cab);
-          // this callback will be called asynchronously
-          // when the response is available
-          getdeal();
-        }, function errorCallback(response) {
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
+      }, function (err) {
+        console.log(err);
       })
-   
-      var getdeal=function(){
-        $scope.deal={};
-        $scope.cabs={};
-        var search =location.pathname;
-        var id = search.split("/");
-        $http({
-          method: 'GET',
-          url: '/api/v1/cab'
-        }).then(function successCallback(response) {
-            for(var i=0; i<response.data.result.cabs.length; i++){
-                for(var j=0; j<response.data.result.cabs[i].deals.length; j++){
-                    if(response.data.result.cabs[i].id==1 && response.data.result.cabs[i].deals[j].id==1){
-                        $scope.cabs =response.data.result.cabs[i];
-                        $scope.deal =response.data.result.cabs[i].deals[j];
 
-                        console.log("cab[]",$scope.cabs );         
-                        console.log("deal[]",$scope.deal );     
-                        
-                        return $scope.cabs,$scope.deal ;
-                        
-                        
-              }
-            }
-        }
-          }, function errorCallback(response) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-        });
-      }
+    $http.get("/api/v1/cab")
+      .then(function (res) {
+        $scope.cabs = res.data.result.cab;
+      }, function (err) {
+        console.log(err);
+      })
 
-  }]) 
+    $scope.editAmenity = function (cabData) {
+      console.log(cabData);
+      $scope.disable_update = false;
+      $scope.cabData = {}
+      $scope.cabData.amenities = cabData.amenities;
+
+    }
+
+    $scope.update = function () {
+      var amenityId = $scope.restaurantData.amenities.id
+      delete $scope.cabData.amenities.id;
+      delete $scope.cabData.amenities.cab;
+
+      console.log($scope.cabData.amenities);
+
+      $http.put("/api/v1/cab/amenity/" + amenityId, $scope.cabData.amenities)
+        .then(function (res) {
+          console.log(res);
+          alert("Updated!!")
+        }, function (err) {
+          alert("err = " + err.data);
+          console.log(err);
+        })
+    }
+
+
+  }])
