@@ -11,8 +11,9 @@
                     <div class="form-group">
                         <label>Cab Type:</label>
                         <br>
+                        
                         <select ng-model="cab.cab_type" ng-required="true">
-                            <option value disabled>-- select cab type --</option>
+                            <option value disabled selected>-- select cab type --</option>
                             <option value="[[$index+1]]" ng-repeat="type in cab_types">[[type]]</option>
                         </select>
     
@@ -84,7 +85,36 @@
                 </div>
             </div>
 
+            <!-- <div>
+                <div ng-repeat="imageData in cabs.images" class="mt10">
+                    <button class="btn btn-danger pull-right" ng-click="cabs.images.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_images">remove</button>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Image Type</label>
+                            <br>
+                            <select ng-model="imageData.image_type" ng-required="true" ng-disabled="disable_images">
+                                <option value disabled>Select image type for cab</option>
+                                <option value="[[image_enum]]" ng-repeat="(image_enum, image_type) in image_types">[[image_type]]</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>
+                                URL
+                                <input type="text" ng-model="imageData.image_url" class="form-control" ng-disabled="disable_images" ng-required="true">
+                                <img class="img-responsive img-thumbnail img-small50" ng-show="imageData.image_url" src="[[imageData.image_url]]" alt="[[imageData.image_url]]">
+                            </span>
+                        </div>
+                    </div>
     
+    
+    
+    
+                </div>
+    
+                <button class="btn btn-default" ng-click="addImg()" ng-disabled="disable_images">Add More Images</button>
+    
+    
+            </div> -->
             <fieldset>
                 <h4>Amenity</h4>
                 <div class="row">

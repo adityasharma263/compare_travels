@@ -944,18 +944,35 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.fuel_types = Constants.Fuel_types;
     $scope.amenities = Constants.Amenities;
     $scope.cab_types = Constants.Cab_types;
-    
+    $scope.cabs={};
+
+    $scope.cabs.images = [
+      {
+        "image_type": null,
+        "image_url": ""
+      }
+    ]
+    $scope.image_types ={
+ 
+      1:  "Monthly Rental",
+      2:  "Sightseeing",
+      3:  "Luxury", 
+      4:  "Outstation",
+      5:  "Self Drive", 
+      6:  "Hire a Driver",
+      7:  "Quick Cabs"
+  
+    },
 
     $scope.cabType = function(id){
-     
 
-    $http.get("/api/v1/cab?cab_type=" + id)
-    .then(function (res) {
-      $scope.cabs = res.data.result.cabs;
-    }, function (err) {
-      console.log(err);
-    });
-  }
+      $http.get("/api/v1/cab?cab_type=" + id)
+      .then(function (res) {
+        $scope.cabs = res.data.result.cabs;
+      }, function (err) {
+        console.log(err);
+      });
+    }
 
     var createToast=function(msg, color){
       var x= document.getElementById("snackbar");
@@ -1050,6 +1067,10 @@ angular.module('comparetravel', ['angular.filter'])
     }
 
     $scope.editCab = function (cabData) {
+      $scope.functionCalling = "Update";
+      $scope.disable_amenity = true;
+      $scope.disable_images = true;
+
       $scope.ecab=cabData;
       $scope.ecabDeals=cabData.deals;
       $scope.ecabAmenities=cabData.amenities;
@@ -1061,7 +1082,7 @@ angular.module('comparetravel', ['angular.filter'])
           if(cabData.cab_type==i){
 
             $scope.ecab.cab_type=Constants.Cab_types[i];
-            console.log("$scope.cab.cab_type",$scope.cab.cab_type);
+            console.log("$scope.cab.cab_type",$scope.ecab.cab_type);
             console.log("$scope.ecab",$scope.ecab);
           }
       }
@@ -1128,15 +1149,15 @@ angular.module('comparetravel', ['angular.filter'])
     
     $scope.image_types ={
  
-      1:     'Monthly Rental',
-      2:     'Sightseeing',
-      3:     'Luxury', 
-      4:     'Outstation',
-      5:     'Self Drive', 
-      6:     'Hire a Driver ',
-      7:     'Quick Cabs'
+      1:  "Monthly Rental",
+      2:  "Sightseeing",
+      3:  "Luxury", 
+      4:  "Outstation",
+      5:  "Self Drive", 
+      6:  "Hire a Driver",
+      7:  "Quick Cabs"
   
-  },
+    },
   
     $scope.disable_update = true;
     var cab_id = null;
