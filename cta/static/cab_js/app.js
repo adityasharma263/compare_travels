@@ -1084,13 +1084,17 @@ angular.module('comparetravel', ['angular.filter'])
       }, function (err) {
         console.log(err);
       })
+    $scope.cabType = function(id){
+    
 
-    $http.get("/api/v1/cab")
+      $http.get("/api/v1/cab?cab_type=" + id)
       .then(function (res) {
-        $scope.cabs = res.data.result.cab;
+        $scope.cabs = res.data.result.cabs;
       }, function (err) {
         console.log(err);
-      })
+      });
+    }
+   
 
     $scope.editAmenity = function (cabData) {
       console.log(cabData);
@@ -1101,7 +1105,7 @@ angular.module('comparetravel', ['angular.filter'])
     }
 
     $scope.update = function () {
-      var amenityId = $scope.restaurantData.amenities.id
+      var amenityId = $scope.cabData.amenities.id
       delete $scope.cabData.amenities.id;
       delete $scope.cabData.amenities.cab;
 
@@ -1118,4 +1122,127 @@ angular.module('comparetravel', ['angular.filter'])
     }
 
 
+  }])
+  .controller("dashboardImagesController", ["$scope", "$http", "$q", function ($scope, $http, $q) {
+
+    
+    $scope.image_types ={
+ 
+      1:     'Monthly Rental',
+      2:     'Sightseeing',
+      3:     'Luxury', 
+      4:     'Outstation',
+      5:     'Self Drive', 
+      6:     'Hire a Driver ',
+      7:     'Quick Cabs'
+  
+  },
+  
+    $scope.disable_update = true;
+    var cab_id = null;
+    $scope.functionCall = "update";
+
+    $scope.cabType = function(id){
+      $http.get("/api/v1/cab?cab_type=" + id)
+      .then(function (res) {
+        $scope.cabs = res.data.result.cabs;
+      }, function (err) {
+        console.log(err);
+      });
+    }
+
+    $scope.editImages = function (cabData) {
+      $scope.disable_update = false;
+      cab_id = cabData.id;
+      for (i in cabData.images) {
+        cabData.images[i].image_type = cabData.images[i].image_type + ""
+      }
+      $scope.cabData = {}
+      $scope.cabData.images = cabData.images;
+
+
+    }
+
+    $scope.update = function () {
+
+      var imageList = [];
+
+      for (i in $scope.cabData.images) {
+        var imageId = $scope.cabData.images[i].id;
+        delete $scope.cabData.images[i].id;
+        delete $scope.cabData.images[i].cab;
+
+        imageList.push($http.put("/api/v1/cab/image/" + imageId, $scope.cabData.images[i]))
+      }
+
+
+      $q.all(imageList)
+        .then(function (res) {
+          alert("updated!!");
+        }, function (err) {
+          alert("err =" + err)
+          console.log(err);
+        })
+
+
+    }
+
+    $scope.deleteImage = function (imageId) {
+      $http.delete("/api/v1/cab/image/" + imageId)
+        .then(function (res) {
+
+          alert("delete");
+
+        }, function (err) {
+          console.log(err)
+        })
+    }
+
+
+    $scope.addMoreImages = function () {
+      $scope.addImages = true;
+      $scope.functionCall = "Add";
+
+      $scope.cabData = {};
+      $scope.cabData.images = [
+        {
+
+          "image_type": null,
+          "image_url": ""
+        }
+      ]
+    }
+
+    $scope.addMorecabImages = function () {
+      var addImages = {
+
+        "image_type": null,
+        "image_url": ""
+      }
+
+      $scope.cabData.images.push(addImages);
+    };
+
+
+    $scope.Add = function () {
+
+      console.log($scope.cabData);
+      var imageList = [];
+
+      for (i in $scope.cabData.images) {
+
+        $scope.cabData.images[i].cab_id = cab_id;
+        imageList.push($http.post("/api/v1/cab/images", $scope.cabData.images[i]))
+      }
+
+
+      $q.all(imageList)
+        .then(function (res) {
+          alert("Added!!");
+        }, function (err) {
+          alert("err =" + err)
+          console.log(err);
+        })
+
+    }
   }])

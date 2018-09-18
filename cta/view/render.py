@@ -672,6 +672,10 @@ def cab_admin():
 def admin_cab_amenity():
     return render_template("cab/cab_amenity_dashboard.html")
 
+@app.route("/admin/cab/images", methods=['GET'])
+def admin__cab_images():
+    return render_template("cab/cab_images_dashboard.html")
+
 
 @app.route('/cab/list', methods=['GET'])
 def cab_list():
