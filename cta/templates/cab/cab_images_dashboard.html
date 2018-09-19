@@ -41,7 +41,7 @@
                             <div class="col-sm-6">
                                 <label>Image Type</label>
                                 <br>
-                                <select ng-model="imageData.image_type" ng-required="true" ng-disabled="disable_images">
+                                <select ng-model="imageData.cab" ng-required="true" ng-disabled="disable_images">
                                     <option value disabled>Select image type for cab</option>
                                     <option value="[[image_enum]]" ng-repeat="(image_enum, image_type) in image_types">[[image_type]]</option>
                                 </select>

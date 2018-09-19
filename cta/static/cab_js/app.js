@@ -946,9 +946,9 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.cab_types = Constants.Cab_types;
     $scope.cabs={};
 
-    $scope.cabs.images = [
+    $scope.cab.images = [
       {
-        "image_type": null,
+        "cab": null,
         "image_url": ""
       }
     ]
@@ -1030,10 +1030,17 @@ angular.module('comparetravel', ['angular.filter'])
     }
 
     $scope.addImg=function(){
-        $scope.cabImg.push($scope.images);
-        $scope.images={};
+        var addImages = {
+
+          "cab": null,
+          "image_url": ""
+        }
+  
+        $scope.cab.images.push(addImages);
         createToast("'Image Added!!'","green");
     }
+  
+    
 
     $scope.show=function(){
       $scope.myVar= false;
@@ -1047,7 +1054,6 @@ angular.module('comparetravel', ['angular.filter'])
     }
 
     $scope.createCab = function() {
-        $scope.cab.images=$scope.cabImg;
         $scope.cab.deals=$scope.cabDeals;
         console.log("$scope.cab",$scope.cab);
 
@@ -1071,7 +1077,7 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.disable_amenity = true;
       $scope.disable_images = true;
 
-      $scope.ecab=cabData;
+      $scope.cab=cabData;
       $scope.ecabDeals=cabData.deals;
       $scope.ecabAmenities=cabData.amenities;
       $scope.ecabImages=cabData.images;
@@ -1228,7 +1234,7 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.cabData.images = [
         {
 
-          "image_type": null,
+          "cab": null,
           "image_url": ""
         }
       ]
@@ -1237,7 +1243,7 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.addMorecabImages = function () {
       var addImages = {
 
-        "image_type": null,
+        "cab": null,
         "image_url": ""
       }
 
