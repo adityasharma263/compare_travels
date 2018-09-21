@@ -1273,3 +1273,154 @@ angular.module('comparetravel', ['angular.filter'])
 
     }
   }])
+  .controller("dashboardDealController", ["$http", "$scope", "$q", function ($http, $scope, $q) {
+
+
+    $scope.disable_update = true;
+    $scope.functionCall = "update";
+    var cab_id = null;
+
+    $http.get("/api/v1/cab")
+      .then(function (res) {
+        $scope.cabs = res.data.result.cabs;
+      }, function (err) {
+        console.log(err);
+      })
+
+
+    $scope.editDeal = function (cabData) {
+      console.log(cabData);
+      $scope.disable_update = false;
+      $scope.addDeal = false;
+      $scope.functionCall = "update";
+      cab_id = cabData.id;
+
+      $scope.cabData = cabData;
+    }
+
+    $scope.update = function () {
+      var dealList = [];
+
+      for (i in $scope.cabData.deals) {
+        var dealId = $scope.cabData.deals[i].id
+        delete $scope.cabData.deals[i].id;
+        delete $scope.cabData.deals[i].cab;
+        delete $scope.cabData.deals[i].website;
+
+        dealList.push($http.put("/api/v1/cab/deal/" + dealId, $scope.cabData.deals[i]))
+      }
+
+
+      $q.all(dealList)
+        .then(function (res) {
+          alert("updated!!");
+        }, function (err) {
+          alert("err =" + err)
+          console.log(err);
+        })
+
+
+    }
+
+    $scope.deletedeal = function (dealId, index) {
+      $http.delete("/api/v1/cab/deal/" + dealId)
+        .then(function (res) {
+
+          $scope.cabData.deals.splice(index, 1)
+
+          alert("Deleted!!");
+
+        },
+        function (err) {
+          console.log(err);
+          alert("err " + err.status + " (" + err.statusText + ")");
+        })
+    }
+
+
+    $scope.addMoreDeal = function () {
+      $scope.addDeal = true;
+      $scope.functionCall = "Add"
+      $scope.cabData = {};
+
+      $scope.cabData.deals = [
+        {
+          "base_fare": null,
+          "base_fare_peak_season": null,
+          "base_fare_weekend": null,
+          "base_fare_with_fuel": null,
+          "cab_url": "",
+          "cancellation_charges": null,
+          "car_night_allowance_charge":null,
+          "different_pickup_drop_point_charge":null,
+          "driver_daily_allowance_charge":null,
+          "different_pickup_drop_point_charge": null,
+          "driver_daily_allowance_charge": null,
+          "driver_per_hr_allowance_charge": null,
+          "fare_exceeded_per_hr": null,
+          "fare_exceeded_per_km": null,
+          "initial_km": null,
+          "initial_km_fare": null,
+          "is_partner": null,
+          "km_restriction": null,
+          "one_way": null,
+          "outstation":null,
+          "slab": null,
+
+
+        }
+      ]
+    }
+
+
+    $scope.addMore = function () {
+      var moreDeals = {
+          "base_fare": null,
+          "base_fare_peak_season": null,
+          "base_fare_weekend": null,
+          "base_fare_with_fuel": null,
+          "cab_url": "",
+          "cancellation_charges": null,
+          "car_night_allowance_charge":null,
+          "different_pickup_drop_point_charge":null,
+          "driver_daily_allowance_charge":null,
+          "different_pickup_drop_point_charge": null,
+          "driver_daily_allowance_charge": null,
+          "driver_per_hr_allowance_charge": null,
+          "fare_exceeded_per_hr": null,
+          "fare_exceeded_per_km": null,
+          "initial_km": null,
+          "initial_km_fare": null,
+          "is_partner": null,
+          "km_restriction": null,
+          "one_way": null,
+          "outstation":null,
+          "slab": null,
+
+      }
+
+      $scope.cabData.deals.push(moreDeals);
+    }
+
+    $scope.Add = function () {
+
+      var dealList = [];
+
+      for (i in $scope.cabData.deals) {
+        $scope.cabData.deals[i].cab_id = cab_id;
+
+        dealList.push($http.post("/api/v1/cab/deal", $scope.cabData.deals[i]))
+      }
+
+
+      $q.all(dealList)
+        .then(function (res) {
+          alert("Added!!");
+        }, function (err) {
+          alert("err =" + err)
+          console.log(err);
+        })
+    }
+
+
+  }])

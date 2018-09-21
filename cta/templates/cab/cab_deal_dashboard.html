@@ -1,0 +1,364 @@
+{% extends '/cab/components/dashboard_header.html' %} {% block controller%}dashboardDealController{% endblock %} {%
+    block content %}
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Edit Deal</h3>
+            <h4 ng-bind="'cab - '+cabData.car_name" ng-show="cabData.car_name"></h4>
+            <div ng-show="!addDeal">
+                <div class="mt10" ng-repeat=" deal in cabData.deals">
+                    <span class="btn btn-danger pull-right" ng-click="deleteDeal(deal.id, $index);">Delete</span>
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Deal #[[$index+1]]</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare"  ng-required="true" ng-disabled="disable_deal">           
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare Peak Season:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare_peak_season"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare Weekend:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare_weekend"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare with Fuel:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare_with_fuel" ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Cancellation Charge:</label>
+                                    <input type="number" class="form-control" ng-model="deal.cancellation_charges"  ng-required="true" ng-disabled="disable_deal">            
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Car Night Allowance Charge:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.car_night_allowance_charge"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Driver Daily Allowance Charge:</label>
+                                    <input type="number" class="form-control" ng-model="deal.driver_daily_allowance_charge"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Different pickup drop point Charge:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.different_pickup_drop_point_charge"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Fare exceeded per Km:</label>
+                                    <input type="number" class="form-control" ng-model="deal.fare_exceeded_per_km"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Fare exceeded per Hr:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.fare_exceeded_per_hr"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Initial Km:</label>
+                                    <input type="number" class="form-control" ng-model="deal.initial_km"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Initial Km Fare:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.initial_km_fare"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Km Restriction:</label>
+                                    <input type="number" class="form-control" ng-model="deal.km_restriction"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Slab:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.slab"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>
+                                    <input type="checkbox" ng-model="deal.one_way "  ng-required="true" ng-disabled="disable_deal">One Way
+                                    </label>
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>
+                                    <input type="checkbox" step="any" ng-model="deal.outstation"  ng-required="true" ng-disabled="disable_deal">Outstation
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" ng-model="deal.is_partner" ng-true-value="true" ng-false-value="false"  ng-required="true" ng-disabled="disable_deal">Is partner?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Cab Url: </label>
+                                    <input  class="form-control" id="name"  ng-model="deal.cab_url" type="text"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div ng-show="addDeal">
+                <div class="mt10" ng-repeat=" deal in cabData.deals">
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span class="btn btn-danger pull-right" ng-click="cabData.deals.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_deal">remove</span>
+                            <h4>Deal #[[$index+1]]</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare"  ng-required="true" ng-disabled="disable_deal">           
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare Peak Season:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare_peak_season"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare Weekend:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare_weekend"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Base Fare with Fuel:</label>
+                                    <input type="number" class="form-control" ng-model="deal.base_fare_with_fuel" ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Cancellation Charge:</label>
+                                    <input type="number" class="form-control" ng-model="deal.cancellation_charges"  ng-required="true" ng-disabled="disable_deal">            
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Car Night Allowance Charge:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.car_night_allowance_charge"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Driver Daily Allowance Charge:</label>
+                                    <input type="number" class="form-control" ng-model="deal.driver_daily_allowance_charge"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Different pickup drop point Charge:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.different_pickup_drop_point_charge"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Fare exceeded per Km:</label>
+                                    <input type="number" class="form-control" ng-model="deal.fare_exceeded_per_km"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Fare exceeded per Hr:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.fare_exceeded_per_hr"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Initial Km:</label>
+                                    <input type="number" class="form-control" ng-model="deal.initial_km"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Initial Km Fare:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.initial_km_fare"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Km Restriction:</label>
+                                    <input type="number" class="form-control" ng-model="deal.km_restriction"  ng-required="true" ng-disabled="disable_deal">
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Slab:</label>
+                                    <input type="number" class="form-control" step="any" ng-model="deal.slab"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>
+                                    <input type="checkbox" ng-model="deal.one_way "  ng-required="true" ng-disabled="disable_deal">One Way
+                                    </label>
+                
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>
+                                    <input type="checkbox" step="any" ng-model="deal.outstation"  ng-required="true" ng-disabled="disable_deal">Outstation
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" ng-model="deal.is_partner" ng-true-value="true" ng-false-value="false"  ng-required="true" ng-disabled="disable_deal">Is partner?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Cab Url: </label>
+                                    <input  class="form-control" id="name"  ng-model="deal.cab_url" type="text"  ng-required="true" ng-disabled="disable_deal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="btn btn-default" ng-click="addMore()" ng-disabled="disable_deal" style="margin:10px 0;">Add More</button>
+            </div>
+            
+    
+            <button class="btn btn-success" ng-disabled="disable_update"  ng-click="this[functionCall]()">[[functionCall]]</button>
+            <button class="btn btn-default" ng-show="!addDeal" ng-disabled="disable_update" ng-click="addMoreDeal()">Add More Deal</button>
+    
+        </div>
+    
+        <div class="col-sm-4">
+            <h3>Choose cab to update or delete Deals.</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="search" placeholder="search hotels...">
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-4" ng-repeat="cab in cabs | filter: search">
+                    <div class="thumbnail">
+                        <img ng-src="[[cab.images[0].image_url]]" alt="">
+                        <div class="caption">
+                            <h4>[[cab.name]]</h4>
+                            <p>
+                                <span>location :
+                                    <span>[[cab.city]]</span>
+                                </span>
+                            </p>
+                            <p>
+                                <button class="btn btn-primary" role="button" ng-click="$parent.editDeal(cab)">Edit</button>
+                                <button class="btn btn-default" role="button" ng-click="deleteDeal()">Delete</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    
+    {% endblock %}
