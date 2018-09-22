@@ -963,6 +963,47 @@ angular.module('comparetravel', ['angular.filter'])
       7:  "Quick Cabs"
   
     },
+    $scope.cab.deals = [
+      {
+        "base_fare": null,
+          "base_fare_peak_season": null,
+          "base_fare_weekend": null,
+          "base_fare_with_fuel": null,
+          "cab_url": "",
+          "cancellation_charges": null,
+          "car_night_allowance_charge":null,
+          "different_pickup_drop_point_charge":null,
+          "driver_daily_allowance_charge":null,
+          "different_pickup_drop_point_charge": null,
+          "driver_daily_allowance_charge": null,
+          "driver_per_hr_allowance_charge": null,
+          "fare_exceeded_per_hr": null,
+          "fare_exceeded_per_km": null,
+          "initial_km": null,
+          "initial_km_fare": null,
+          "is_partner": null,
+          "km_restriction": null,
+          "one_way": null,
+          "outstation":null,
+          "slab": null,
+
+      }
+    ]
+
+    $scope.addMoreDeal = function () {
+
+      var moreDeals = {
+        "desc": "",
+        "dish": "",
+        "dish_type": null,
+        "full_price": null,
+        "half_price": null,
+        "image": "",
+
+      }
+
+      $scope.cab.deals.push(moreDeals);
+    };
 
     $scope.cabType = function(id){
 
@@ -1046,17 +1087,16 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.myVar= false;
   }
 
-    $scope.addDeal=function(){
-      $scope.cabDeals.push($scope.deals);
-      $scope.deals={};
-      createToast("'Deal Added!!'","green");
+    // $scope.addDeal=function(){
+    //   $scope.cabDeals.push($scope.deals);
+    //   $scope.deals={};
+    //   createToast("'Deal Added!!'","green");
   
-    }
+    // }
 
     $scope.createCab = function() {
-        $scope.cab.deals=$scope.cabDeals;
-        console.log("$scope.cab",$scope.cab);
 
+        console.log("$scope.cab",$scope.cab);
         sendPostCall('/api/v1/cab', $scope.cab)
     }
 
@@ -1076,22 +1116,24 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.functionCalling = "Update";
       $scope.disable_amenity = true;
       $scope.disable_images = true;
+      $scope.disable_deal=true;
 
       $scope.cab=cabData;
-      $scope.ecabDeals=cabData.deals;
-      $scope.ecabAmenities=cabData.amenities;
-      $scope.ecabImages=cabData.images;
+      console.log($scope.cab);
+      // $scope.ecabDeals=cabData.deals;
+      // $scope.ecabAmenities=cabData.amenities;
+      // $scope.ecabImages=cabData.images;
 
-      console.log("Constants.Cab_types",Constants.Cab_types);
+      // console.log("Constants.Cab_types",Constants.Cab_types);
       
-      for(i in Constants.Cab_types){
-          if(cabData.cab_type==i){
+      // for(i in Constants.Cab_types){
+      //     if(cabData.cab_type==i){
 
-            $scope.ecab.cab_type=Constants.Cab_types[i];
-            console.log("$scope.cab.cab_type",$scope.ecab.cab_type);
-            console.log("$scope.ecab",$scope.ecab);
-          }
-      }
+      //       $scope.ecab.cab_type=Constants.Cab_types[i];
+      //       console.log("$scope.cab.cab_type",$scope.ecab.cab_type);
+      //       console.log("$scope.ecab",$scope.ecab);
+      //     }
+      // }
 
     }
 
