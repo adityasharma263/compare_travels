@@ -1319,9 +1319,13 @@ angular.module('comparetravel', ['angular.filter'])
 
 
     $scope.disable_update = true;
+    $scope.myVar= true;
     $scope.functionCall = "update";
     var cab_id = null;
 
+    $scope.show=function(){
+      $scope.myVar= false;
+    }
     $http.get("/api/v1/cab")
       .then(function (res) {
         $scope.cabs = res.data.result.cabs;
@@ -1338,11 +1342,13 @@ angular.module('comparetravel', ['angular.filter'])
       cab_id = cabData.id;
 
       $scope.cabData = cabData;
+      // $scope.website=$scope.cabData.deals
+
     }
 
     $scope.update = function () {
       var dealList = [];
-
+      
       for (i in $scope.cabData.deals) {
         var dealId = $scope.cabData.deals[i].id
         delete $scope.cabData.deals[i].id;
@@ -1464,5 +1470,11 @@ angular.module('comparetravel', ['angular.filter'])
         })
     }
 
-
+    $http({
+      method: 'GET',
+      url: '/api/v1/cab/website' 
+    }).then(function successCallback(response) {
+        $scope.websites = response.data.result.website;
+      }, function errorCallback(response) {
+    })
   }])

@@ -13,6 +13,38 @@
                         <div class="col-sm-12">
                             <h4>Deal #[[$index+1]]</h4>
                         </div>
+                        <div class="row" ng-show="myVar">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Website name:</label>
+                                    <select class="form-control" ng-model="deal.website_id" ng-required="true" ng-disabled="disable_deal">
+                                        <option ng-repeat="obj in websites" value="[[obj.id]]">[[obj.website]]</option>
+                                    </select>  
+                                </div>
+                            </div>      
+        
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#website" ng-click="show()">add new website</button>
+                            </div>
+                        
+                        </div>
+        
+                        <div id="website" class="collapse">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Website name:</label>
+                                        <input type="text" class="form-control" ng-model="deal.website.website" >           
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Website logo image:</label>
+                                        <input type="text" class="form-control" ng-model="deal.website.logo_image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
