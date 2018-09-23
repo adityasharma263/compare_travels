@@ -351,8 +351,9 @@
     
            
             
-
-            <button type="submit" class="btn btn-success">Add</button>
+                <button class="btn btn-default" ng-click="this[functionCalling]()">[[functionCalling]]</button>
+                <button class="btn btn-default" ng-click="functionCalling = 'Add'" ng-show="functionCalling == 'Update'">Cancel</button>
+            <!-- <button type="submit" class="btn btn-success">Add</button> -->
             </form>
             <!-- </form> -->
             <hr>
@@ -407,7 +408,7 @@
                             </span>
                         </p>
                         <p>
-                            <button class="btn btn-primary" role="button" onclick="hide('add'),show('edit')" ng-click="$parent.editCab(cab)">Edit</button>
+                            <button class="btn btn-primary" role="button" ng-click="$parent.editCab(cab)">Edit</button>
                             <button class="btn btn-default" role="button" ng-click="deleteCab(cab.id, $index)">Delete</button>
                         </p>
                     </div>
@@ -433,7 +434,7 @@
                             </span>
                         </p>
                         <p>
-                            <button class="btn btn-primary" role="button" onclick="hide('add'),show('edit')" ng-click="$parent.editCab(cab)">Edit</button>
+                            <button class="btn btn-primary" role="button"  ng-click="$parent.editCab(cab)">Edit</button>
                             <button class="btn btn-default" role="button" ng-click="deleteCab(cab.id, $index)">Delete</button>
                         </p>
                     </div>
@@ -459,7 +460,7 @@
                             </span>
                         </p>
                         <p>
-                            <button class="btn btn-primary" role="button" onclick="hide('add'),show('edit')" ng-click="$parent.editCab(cab)">Edit</button>
+                            <button class="btn btn-primary" role="button"ng-click="$parent.editCab(cab)">Edit</button>
                             <button class="btn btn-default" role="button" ng-click="deleteCab(cab.id, $index)">Delete</button>
                         </p>
                     </div>
@@ -485,7 +486,7 @@
                             </span>
                         </p>
                         <p>
-                            <button class="btn btn-primary" role="button" onclick="hide('add'),show('edit')" ng-click="$parent.editCab(cab)">Edit</button>
+                            <button class="btn btn-primary" role="button"  ng-click="$parent.editCab(cab)">Edit</button>
                             <button class="btn btn-default" role="button" ng-click="deleteCab(cab.id, $index)">Delete</button>
                         </p>
                     </div>
@@ -537,7 +538,7 @@
                             </span>
                         </p>
                         <p>
-                            <button class="btn btn-primary" role="button" onclick="hide('add'),show('edit')" ng-click="$parent.editCab(cab)">Edit</button>
+                            <button class="btn btn-primary" role="button" ng-click="$parent.editCab(cab)">Edit</button>
                             <button class="btn btn-default" role="button" ng-click="deleteCab(cab.id, $index)">Delete</button>
                         </p>
                     </div>

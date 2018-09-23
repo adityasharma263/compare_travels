@@ -1036,18 +1036,18 @@ angular.module('comparetravel', ['angular.filter'])
         // or server returns response with an error status.
     })
 
-    $http({
-      method: 'GET',
-      url: '/api/v1/cab/deal?website_id=' + $scope.deals.website_id
-    }).then(function successCallback(response) {
+    // $http({
+    //   method: 'GET',
+    //   url: '/api/v1/cab/deal?website_id=' + $scope.deals.website_id
+    // }).then(function successCallback(response) {
 
-        $scope.availableDeals= response.data.result.deals;
-        // this callback will be called asynchronously
-        // when the response is available
-      }, function errorCallback(response) {
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-    })
+    //     $scope.availableDeals= response.data.result.deals;
+    //     // this callback will be called asynchronously
+    //     // when the response is available
+    //   }, function errorCallback(response) {
+    //     // called asynchronously if an error occurs
+    //     // or server returns response with an error status.
+    // })
 
 
     var sendPostCall = function(url, data) {
@@ -1093,12 +1093,12 @@ angular.module('comparetravel', ['angular.filter'])
     //   createToast("'Deal Added!!'","green");
   
     // }
-
-    $scope.createCab = function() {
-
-        console.log("$scope.cab",$scope.cab);
-        sendPostCall('/api/v1/cab', $scope.cab)
+    $scope.functionCalling = "Add";
+    $scope.Add = function () {
+      console.log("$scope.cab",$scope.cab);
+      sendPostCall('/api/v1/cab', $scope.cab)
     }
+
 
     $scope.deleteCab = function (cabId, index) {
 
