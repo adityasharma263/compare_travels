@@ -102,7 +102,9 @@ def cab_api():
                             "km_restriction": deal.get('km_restriction', None),
                             "cancellation_charges": deal.get('cancellation_charges', None),
                         }
+                        print("**********************8888",fare_obj)
                         deal['booking'] = CabFare().fare_calculation(fare_obj)
+    
         return jsonify({'result': {'cabs': result.data}, 'message': "Success", 'error': False})
     else:
         cab = request.json
@@ -210,9 +212,20 @@ def cab_deal():
         result = CabDealSchema(many=True).dump(data)
         return jsonify({'result': {'deals': result.data}, 'message': "Success", 'error': False})
     else:
-        post = CabDeal(**request.json)
-        post.save()
-        result = CabDealSchema().dump(post)
+        deal = request.json
+        cab_id = deal.get("cab_id", None)
+        deal.pop('cab_id', None)
+        website = deal.get("website", None)
+        if website:
+            deal.pop('website', None)
+            website_post = CabWebsite(**website)
+            website_post.save()
+            deal["website_id"] = website_post.id
+        deal_post = CabDeal(**deal)
+        deal_post.save()
+        assoc_post = CabDealAssociation(cab_id=cab_id, deal_id=deal_post.id)
+        assoc_post.save()
+        result = CabDealSchema().dump(deal_post)
         return jsonify({'result': {'deals': result.data}, 'message': "Success", 'error': False})
 
 
