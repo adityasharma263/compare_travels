@@ -671,6 +671,10 @@ def cab_admin():
 @app.route("/admin/cab/deal", methods=['GET'])
 def cab_admin_deals():
     return render_template("cab/cab_deal_dashboard.html")
+
+@app.route("/admin/cab/collection", methods=['GET'])
+def cab_admin_collection():
+    return render_template("cab/cab_collection_dashboard.html")    
     
 @app.route("/admin/cab/amenity", methods=['GET'])
 def admin_cab_amenity():
