@@ -952,17 +952,17 @@ angular.module('comparetravel', ['angular.filter'])
         "image_url": ""
       }
     ]
-    $scope.image_types ={
+    // $scope.image_types ={
  
-      1:  "Monthly Rental",
-      2:  "Sightseeing",
-      3:  "Luxury", 
-      4:  "Outstation",
-      5:  "Self Drive", 
-      6:  "Hire a Driver",
-      7:  "Quick Cabs"
+    //   1:  "Monthly Rental",
+    //   2:  "Sightseeing",
+    //   3:  "Luxury", 
+    //   4:  "Outstation",
+    //   5:  "Self Drive", 
+    //   6:  "Hire a Driver",
+    //   7:  "Quick Cabs"
   
-    },
+    // },
     $scope.cab.deals = [
       {
         "base_fare": null,
@@ -1076,7 +1076,7 @@ angular.module('comparetravel', ['angular.filter'])
           "cab": null,
           "image_url": ""
         }
-  
+        addImages.cab=$scope.cab.id;
         $scope.cab.images.push(addImages);
         createToast("'Image Added!!'","green");
     }
@@ -1195,17 +1195,7 @@ angular.module('comparetravel', ['angular.filter'])
   .controller("dashboardImagesController", ["$scope", "$http", "$q", function ($scope, $http, $q) {
 
     
-    $scope.image_types ={
- 
-      1:  "Monthly Rental",
-      2:  "Sightseeing",
-      3:  "Luxury", 
-      4:  "Outstation",
-      5:  "Self Drive", 
-      6:  "Hire a Driver",
-      7:  "Quick Cabs"
-  
-    },
+   
   
     $scope.disable_update = true;
     var cab_id = null;
@@ -1223,9 +1213,9 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.editImages = function (cabData) {
       $scope.disable_update = false;
       cab_id = cabData.id;
-      for (i in cabData.images) {
-        cabData.images[i].image_type = cabData.images[i].image_type + ""
-      }
+      // for (i in cabData.images) {
+      //   cabData.images[i].cab = cabData.images[i].cab_id;
+      // }
       $scope.cabData = {}
       $scope.cabData.images = cabData.images;
 
@@ -1276,7 +1266,6 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.cabData.images = [
         {
 
-          "cab": null,
           "image_url": ""
         }
       ]
@@ -1285,10 +1274,8 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.addMorecabImages = function () {
       var addImages = {
 
-        "cab": null,
         "image_url": ""
       }
-
       $scope.cabData.images.push(addImages);
     };
 
@@ -1300,7 +1287,7 @@ angular.module('comparetravel', ['angular.filter'])
 
       for (i in $scope.cabData.images) {
 
-        $scope.cabData.images[i].cab_id = cab_id;
+        $scope.cabData.images[i].cab_id= cab_id;
         imageList.push($http.post("/api/v1/cab/images", $scope.cabData.images[i]))
       }
 
@@ -1326,13 +1313,6 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.show=function(){
       $scope.myVar= false;
     }
-    $http.get("/api/v1/cab")
-      .then(function (res) {
-        $scope.cabs = res.data.result.cabs;
-      }, function (err) {
-        console.log(err);
-      })
-
 
     $scope.editDeal = function (cabData) {
       console.log(cabData);
@@ -1477,4 +1457,13 @@ angular.module('comparetravel', ['angular.filter'])
         $scope.websites = response.data.result.website;
       }, function errorCallback(response) {
     })
+    $scope.cabType = function(id){
+
+      $http.get("/api/v1/cab?cab_type=" + id)
+      .then(function (res) {
+        $scope.cabs = res.data.result.cabs;
+      }, function (err) {
+        console.log(err);
+      });
+    }
   }])

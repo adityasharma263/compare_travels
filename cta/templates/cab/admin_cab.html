@@ -76,20 +76,19 @@
                     <button class="btn btn-danger pull-right" ng-click="cab.images.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_images">remove</button>
                     <div class="row">
                         <div class="col-sm-6">
-                            <label>Image Type</label>
+                            <label>Cab Image </label>
                             <br>
-                            <select ng-model="imageData.cab" ng-required="true" ng-disabled="disable_images">
+                            <!-- <select ng-model="imageData.cab" ng-required="true" ng-disabled="disable_images">
                                 <option value disabled>Select image type for cab</option>
                                 <option value="[[image_enum]]" ng-repeat="(image_enum, image_type) in image_types">[[image_type]]</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
+                            </select> -->
                             <span>
                                 URL
                                 <input type="text" ng-model="imageData.image_url" class="form-control" ng-disabled="disable_images" ng-required="true">
                                 <img class="img-responsive img-thumbnail img-small50" ng-show="imageData.image_url" src="[[imageData.image_url]]" alt="[[imageData.image_url]]">
                             </span>
                         </div>
+                       
                     </div>
     
     
