@@ -560,17 +560,37 @@ angular.module('comparetravel', ['angular.filter'])
     var type1 = str[2].split("=");
     var type2 = str[3].split("=");
     var type3 = str[0].split("=");
-    $scope.info.pickup_location = type[1];
-    //$scope.info.pickup_time= type1[1];
-    $scope.info.drop_time = type2[1];
-    $scope.info.drop_location = type3[1];
-    console.log(type,type1,type2,type3);
-    var cur =Date(type1[1] * 1000);
+    var pickuplat= str[4].split("=");
+    var pickuplon= str[5].split("=");
+    var droplat=str[6].split("=");
+    var droplon=str[7].split("=");
 
-    $scope.info.pickup_time = $filter('date')(cur, 'ddd MMM d  h:mm ');
-    console.log("$scope.info.pickup_time",$scope.info.pickup_time);
-   
-    
+/***********************latlon to address conversion********************************************* */
+    var geocoder  = new google.maps.Geocoder();             // create a geocoder object
+    var pickuplocation  = new google.maps.LatLng(pickuplat[1],pickuplon[1]);    // turn coordinates into an object          
+    var droplocation=new google.maps.LatLng(droplat[1],droplon[1]);
+    geocoder.geocode({'latLng': pickuplocation}, function (results, status) {
+      if(status == google.maps.GeocoderStatus.OK) {           // if geocode success
+        var pickupadd=results[0].formatted_address;         // if address found, pass to processing function
+        console.log("pickupadd",pickupadd);
+        $scope.info.pickup_location = pickupadd;
+
+      }
+    }); 
+    geocoder.geocode({'latLng': droplocation}, function (results, status) {
+      if(status == google.maps.GeocoderStatus.OK) {           // if geocode success
+        var dropadd=results[0].formatted_address;         // if address found, pass to processing function
+        console.log("dropadd",dropadd);
+        $scope.info.drop_location=dropadd;
+
+      }
+    }); 
+/*********************************************************************************************** */
+
+
+    $scope.info.pickup_time=new Date(type1[1]*1000);
+    $scope.info.drop_time = new Date(type2[1]*1000);
+
     
 
     $scope.getCabs = function(id) {
@@ -965,7 +985,7 @@ angular.module('comparetravel', ['angular.filter'])
     // },
     $scope.cab.deals = [
       {
-        "base_fare": null,
+          "base_fare": null,
           "base_fare_peak_season": null,
           "base_fare_weekend": null,
           "base_fare_with_fuel": null,
@@ -993,13 +1013,27 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.addMoreDeal = function () {
 
       var moreDeals = {
-        "desc": "",
-        "dish": "",
-        "dish_type": null,
-        "full_price": null,
-        "half_price": null,
-        "image": "",
-
+        "base_fare": null,
+          "base_fare_peak_season": null,
+          "base_fare_weekend": null,
+          "base_fare_with_fuel": null,
+          "cab_url": "",
+          "cancellation_charges": null,
+          "car_night_allowance_charge":null,
+          "different_pickup_drop_point_charge":null,
+          "driver_daily_allowance_charge":null,
+          "different_pickup_drop_point_charge": null,
+          "driver_daily_allowance_charge": null,
+          "driver_per_hr_allowance_charge": null,
+          "fare_exceeded_per_hr": null,
+          "fare_exceeded_per_km": null,
+          "initial_km": null,
+          "initial_km_fare": null,
+          "is_partner": null,
+          "km_restriction": null,
+          "one_way": null,
+          "outstation":null,
+          "slab": null,
       }
 
       $scope.cab.deals.push(moreDeals);
@@ -1117,8 +1151,17 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.disable_amenity = true;
       $scope.disable_images = true;
       $scope.disable_deal=true;
+      cabData.cab_type = cabData.cab_type + ""
+      cabData.car_type = cabData.car_type + ""
+      cabData.amenities.fuel_type = cabData.amenities.fuel_type + ""
+
+      for (i in cabData.deals) {
+        cabData.deals[i].website_id = cabData.deals[i].website + ""
+      }
+
 
       $scope.cab=cabData;
+
       console.log($scope.cab);
       // $scope.ecabDeals=cabData.deals;
       // $scope.ecabAmenities=cabData.amenities;

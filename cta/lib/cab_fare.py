@@ -36,7 +36,9 @@ class CabFare:
         distance = CabFare().distance_from_lat_lon(fare_obj["pickup_lat"], fare_obj["pickup_lon"], fare_obj["drop_lat"],
                                                    fare_obj["drop_lon"])
         time_obj = CabFare().time_between_pickup_drop(fare_obj['pickup_time'], fare_obj['drop_time'])
+        print("6666666666666666666666666666666666666666666666666666666")
         cab_obj = {
+
             '1': "monthly_rental",
             '2': "sight_seening",
             '3': "luxury",
@@ -57,6 +59,7 @@ class CabFare:
             'total_days': time_obj['total_days'],
             'distance': round(distance, 2)
         }
+        print("************************************************************************************************************")
         return booking_obj
 
     def monthly_rental(self, fare_obj, distance, time_obj):
