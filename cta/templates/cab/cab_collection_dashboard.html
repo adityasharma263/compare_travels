@@ -1,43 +1,111 @@
-{% extends '/cab/components/dashboard_header.html' %} {% block controller%}dashboardCollectionController{% endblock
-    %} {% block content %}
-    
+{% extends '/cab/components/dashboard_header.html' %} {% block controller%}dashboardCollectionController{% endblock %} {%
+    block content %}
     <div class="row">
         <div class="col-md-6">
             <h3>Edit Collection</h3>
-    
+            <h4 ng-bind="'cab - '+cabData.car_name" ng-show="cabData.car_name"></h4>
             <div ng-show="!addCollection">
+                <div class="mt10" ng-repeat="(collection_key, colection_value) in cabData.collections">
+                    <span class="btn btn-danger pull-right" ng-click="deleteCollection(deal.id, $index);">Delete</span>
     
-                
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Collection #[[$index+1]]</h4>
+                        </div>
+                        <label>Collection name</label>
+                        <input type="text" ng-model="collectionData.collection" class="form-control">
+                        <label>Image</label>
+                        <input type="text" ng-model="collectionData.image" class="form-control">
+                        <label>Short description</label>
+                        <input type="text" ng-model="collectionData.desc" class="form-control">
+                        <label>featured on home page?</label>
+                        <input type="checkbox" ng-model="collectionData.featured" ng-true-value="true" ng-false-value="false">
+                    </div>
+                </div>
             </div>
-    
+
             <div ng-show="addCollection">
-                <div ng-repeat="collection in restaurantData.collections">
-                    <button class="btn btn-danger pull-right" ng-click="restaurantData.collections.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_association">remove</button>
+                <div class="mt10" ng-repeat=" collection in cabData.collections">
     
-                    <label>Collection name</label>
-                    <input type="text" ng-model="collection.collection" class="form-control">
-                    <label>Image</label>
-                    <input type="text" ng-model="collection.image" class="form-control">
-                    <label>Short description</label>
-                    <input type="text" ng-model="collection.desc" class="form-control">
-                    <label>featured on home page?</label>
-                    <input type="checkbox" ng-model="collection.featured" ng-true-value="true" ng-false-value="false">
-    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span class="btn btn-danger pull-right" ng-click="cabData.deals.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_deal">remove</span>
+                            <h4>Collection #[[$index+1]]</h4>
+                        </div>
+                            <label>Collection name</label>
+                            <input type="text" ng-model="collection.collection_name" class="form-control">
+                            <label>Image</label>
+                            <input type="text" ng-model="collection.image" class="form-control">
+                            <label>Short description</label>
+                            <input type="text" ng-model="collection.desc" class="form-control">
+                            <label>featured on home page?</label>
+                            <input type="checkbox" ng-model="collection.featured" ng-true-value="true" ng-false-value="false">
+            
+                
+                    </div>
+
                 </div>
                 <button class="btn btn-default" ng-click="addMore()" style="margin:10px 0;">add more</button>
-    
-    
+
             </div>
+            
     
-    
-    
-            <button class="btn btn-success" ng-disabled="disable_update" ng-click="this[functionCall]()">[[functionCall]]</button>
-            <button class="btn btn-default" ng-show="!addCollection" ng-click="addMoreCollection()">Add new collection</button>
+            <button class="btn btn-success" ng-disabled="disable_update"  ng-click="this[functionCall]()">[[functionCall]]</button>
+            <button class="btn btn-default" ng-show="!addCollection" ng-disabled="disable_update" ng-click="addMoreCollection()">Add More Collection</button>
     
         </div>
     
-        
+        <div class="col-sm-6">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#monthly" ng-click="cabType(1)">Monthly Rental</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#sight" ng-click="cabType(2)">Sight Seeing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#luxury" ng-click="cabType(3)">Luxury</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#outstation" ng-click="cabType(4)">Outstation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#self" ng-click="cabType(5)">Self Drive</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#hire" ng-click="cabType(6)">Hire a Driver</a>
+                </li>
+            </ul>
+            <h3>Choose cab to update or delete Deals.</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="search" placeholder="search cabs...">
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-4" ng-repeat="cab in cabs | filter: search">
+                    <div class="thumbnail">
+                        <img ng-src="[[cab.images[0].image_url]]" alt="">
+                        <div class="caption">
+                            <h4>[[cab.name]]</h4>
+                            <p>
+                                <span>location :
+                                    <span>[[cab.city]]</span>
+                                </span>
+                            </p>
+                            <p>
+                                <button class="btn btn-primary" role="button" ng-click="$parent.editCollection(Cab.collection)">Edit</button>
+                                <button class="btn btn-default" role="button" ng-click="deleteDeal(cab.id, $index)">Delete</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
     </div>
     
     
     {% endblock %}
+    
+    
+   

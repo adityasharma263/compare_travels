@@ -975,6 +975,32 @@ angular.module('comparetravel', ['angular.filter'])
         "image_url": ""
       }
     ]
+    $scope.cab = {
+      association: [{
+
+        "collections": {
+
+        },
+        "product": {
+
+        }
+      }]
+    };
+    $http.get("/api/v1/cab/product")
+      .then(function (res) {
+        $scope.cuisine = res.data.result.cuisine;
+      }, function (err) {
+        console.log(err);
+      });
+
+    
+
+    $http.get("/api/v1/cab/collection")
+      .then(function (res) {
+        $scope.collection = res.data.result.collection;
+      }, function (err) {
+        console.log(err);
+      });
     // $scope.image_types ={
  
     //   1:  "Monthly Rental",
@@ -1148,7 +1174,42 @@ angular.module('comparetravel', ['angular.filter'])
         })
 
     }
+    $scope.addMoreAssociation = function () {
+      var addAssociation = {
+        "collections": {
 
+        },
+        "product": {
+
+        }
+      }
+      $scope.cab.association.push(addAssociation);
+
+
+
+    }
+    $scope.Update = function () {
+
+      delete $scope.cab.amenities
+      delete $scope.cab.association;
+      delete $scope.cab.deals;
+      delete $scope.cab.id;
+      delete $scope.cab.images;
+
+      console.log(" $scope.cab =", $scope.cab);
+
+      $http.put("/api/v1/cab/" + put_cab_id, $scope.cab)
+        .then(function (res) {
+          console.log(res);
+
+        }, function (err) {
+          console.log(err);
+        })
+
+
+
+
+    }
     $scope.editCab = function (cabData) {
       $scope.functionCalling = "Update";
       $scope.disable_amenity = true;
@@ -1157,11 +1218,19 @@ angular.module('comparetravel', ['angular.filter'])
       cabData.cab_type = cabData.cab_type + ""
       cabData.car_type = cabData.car_type + ""
       cabData.amenities.fuel_type = cabData.amenities.fuel_type + ""
-
+      put_cab_id = cabData.id;
       for (i in cabData.deals) {
         cabData.deals[i].website_id = cabData.deals[i].website + ""
       }
 
+      for (i in cabData.association) {
+        cabData.association[i].collections.collection_id = cabData.association[i].collections.id + ""
+        cabData.association[i].cuisines.cuisine_id = cabData.association[i].cuisines.id + ""
+        cabData.association[i].collections.collection = null;
+        cabData.association[i].collections.image = null;
+        cabData.association[i].collections.desc = null;
+        cabData.association[i].collections.featured = null;
+      }
 
       $scope.cab=cabData;
 
@@ -1188,6 +1257,7 @@ angular.module('comparetravel', ['angular.filter'])
   .controller("dashboardAmenityController", ["$scope", "$http", function ($scope, $http) {
     $scope.disable_update = true;
 
+    
     $http.get("/api/v1/cab/amenity")
       .then(function (res) {
         $scope.amenity = res.data.result.amenities;
@@ -1221,6 +1291,8 @@ angular.module('comparetravel', ['angular.filter'])
 
     $scope.update = function () {
       var amenityId = $scope.cabData.amenities.id
+      delete $scope.cab.association;
+
       delete $scope.cabData.amenities.id;
       delete $scope.cabData.amenities.cab;
 
@@ -1503,6 +1575,118 @@ angular.module('comparetravel', ['angular.filter'])
         $scope.websites = response.data.result.website;
       }, function errorCallback(response) {
     })
+    $scope.cabType = function(id){
+
+      $http.get("/api/v1/cab?cab_type=" + id)
+      .then(function (res) {
+        $scope.cabs = res.data.result.cabs;
+      }, function (err) {
+        console.log(err);
+      });
+    }
+  }])
+  .controller("dashboardCollectionController", ["$scope", "$http", "$q", function ($scope, $http, $q) {
+
+    $scope.disable_update = true;
+    $scope.addCollection = false;
+    $scope.functionCall = "update";
+    var cab_id = null;
+
+    $http.get("/api/v1/cab/collection")
+      .then(function (res) {
+        $scope.collections = res.data.result.collection;
+      }, function (err) {
+        console.log(err)
+      })
+
+    $scope.editCollection = function (cabData) {
+
+      $scope.disable_update = false;
+      $scope.addCollection = false;
+      $scope.functionCall = "update";
+      $scope.collectionData = cabData.collection;
+      console.log($scope.collectionData)
+
+    }
+
+    $scope.deleteCollection = function (collectionId, index) {
+
+      $http.delete("/api/v1/cab/collection/" + collectionId)
+        .then(function (res) {
+          alert("deleted!!");
+          $scope.collections.splice(index, 1);
+        }, function (err) {
+          alert("err " + err)
+        })
+
+    }
+
+    $scope.addMoreCollection = function () {
+      $scope.addCollection = true;
+      $scope.disable_update = false;
+      $scope.functionCall = "Add"
+      $scope.cabData = {}
+      $scope.cabData.collections = [
+        {
+          "collection_name": "",
+          "image": "",
+          "desc": "",
+          "featured": null
+        }
+      ]
+    }
+
+    $scope.addMore = function () {
+
+      var addCollection = {
+        "collection_name": "",
+        "image": "",
+        "desc": "",
+        "featured": null
+      }
+      $scope.cabData.collections.push(addCollection);
+    }
+
+    $scope.Add = function () {
+
+      console.log($scope.cabData);
+      var collectionList = [];
+
+      for (i in $scope.cabData.collections) {
+
+        collectionList.push($http.post("/api/v1/cab/collection", $scope.cabData.collections[i]))
+      }
+
+
+      $q.all(collectionList)
+        .then(function (res) {
+          alert("Added!!");
+        }, function (err) {
+          alert("err =" + err)
+          console.log(err);
+        })
+
+
+
+
+
+    }
+
+    $scope.update = function () {
+      var collectionId = $scope.collectionData.id;
+      delete $scope.collectionData.id
+
+      $http.put("/api/v1/cab/collection/" + collectionId, $scope.collectionData)
+        .then(function (res) {
+          alert("updated!!");
+
+        }, function (err) {
+          alert("err =" + err);
+          console.log(err);
+        })
+
+    }
+
     $scope.cabType = function(id){
 
       $http.get("/api/v1/cab?cab_type=" + id)

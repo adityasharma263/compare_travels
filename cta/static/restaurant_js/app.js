@@ -680,7 +680,6 @@ var app = angular.module("restaurantApp", ['angular.filter'])
       $scope.disable_menu = true;
       $scope.disable_images = true;
 
-
       restaurantData.phone = parseInt(restaurantData.phone);
       put_restaurant_id = restaurantData.id;
 

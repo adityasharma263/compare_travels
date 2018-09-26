@@ -7,7 +7,7 @@
 
         <div ng-show="!addCollection">
 
-            <div "(collection_key, colection_value) in collectionData">
+            <div ng-repeat="(collection_key, colection_value) in collectionData">
 
                 <label>Collection name</label>
                 <input type="text" ng-model="collectionData.collection" class="form-control">

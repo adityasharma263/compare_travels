@@ -147,6 +147,67 @@
                  
     
             </fieldset>
+            <div ng-repeat="association in cab.association">
+                <button class="btn btn-danger pull-right" ng-click="cab.association.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_association">remove</button>
+    
+                <div class="row">
+    
+                    <div class="col-sm-6">
+    
+                        <div class="form-group">
+                            <h4>Collection</h4>
+                            <div ng-show="!$parent.addNewCollection[$index]">
+                                <select ng-model="association.collections.collection_id" ng-disabled="disable_association">
+                                    <option value disabled selected> -- Select Collection --</option>
+    
+                                    <option value="[[collectionData.id]]" ng-repeat="collectionData in collection">[[collectionData.collection]]</option>
+                                </select>
+                                or
+                                <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = true" ng-disabled="disable_association">Add Collection</button>
+                            </div>
+                            <div ng-show="$parent.addNewCollection[$index]">
+                                <label>Collection name</label>
+                                <input type="text" ng-model="association.collections.collection" class="form-control">
+                                <label>Image</label>
+                                <input type="text" ng-model="association.collections.image" class="form-control">
+                                <label>Short description</label>
+                                <input type="text" ng-model="association.collections.desc" class="form-control">
+                                <label>featured on home page?</label>
+                                <input type="checkbox" ng-model="association.collections.featured" ng-true-value="true" ng-false-value="false">
+                                <br>
+                                <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = false;">cancel</button>
+    
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6">
+                        <div class="form-group">
+    
+                            <h4>Product</h4>
+                            <div ng-if="!addNewProduct[$index]">
+                                <select ng-model="association.products.product_id" ng-disabled="disable_association">
+                                    <option value disabled selected> -- Select product --</option>
+                                    <option value="[[productData.id]]" ng-repeat=" productData in  product">[[productData.product]]</option>
+                                </select>
+                                or
+                                <br>
+                                <button class="btn btn-default" ng-click="$parent.addNewProduct[$index] = true" ng-disabled="disable_association">Add Product</button>
+                            </div>
+    
+                            <div ng-if="addNewProduct[$index]">
+                                <label>Product name</label>
+                                <input type="text" ng-model="association.products.product" class="form-control">
+                                <button class="btn btn-default" ng-click="$parent.addNewProduct[$index] = false;">cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button  class="btn btn-default" ng-click="addMoreAssociation()" ng-disabled="disable_association">Add more association</button>
+    
+    
 
             <div class="mt10" ng-repeat=" deal in cab.deals">
                 <div class="row">
@@ -358,15 +419,7 @@
             <!-- </form> -->
             <hr>
         </div>
-
-
-       
-
-        <div class="col-sm-6">
-
-
- 
-
+    <div class="col-sm-6">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
