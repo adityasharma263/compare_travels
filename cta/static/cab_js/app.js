@@ -562,6 +562,7 @@ angular.module('comparetravel', ['angular.filter'])
     var type3 = str[0].split("=");
     var pickuplat= str[4].split("=");
     var pickuplon= str[5].split("=");
+    
     var droplat=str[6].split("=");
     var droplon=str[7].split("=");
 
@@ -570,8 +571,10 @@ angular.module('comparetravel', ['angular.filter'])
     var pickuplocation  = new google.maps.LatLng(pickuplat[1],pickuplon[1]);    // turn coordinates into an object          
     var droplocation=new google.maps.LatLng(droplat[1],droplon[1]);
     geocoder.geocode({'latLng': pickuplocation}, function (results, status) {
-      if(status == google.maps.GeocoderStatus.OK) {           // if geocode success
-        var pickupadd=results[0].formatted_address;         // if address found, pass to processing function
+      if(status == google.maps.GeocoderStatus.OK) {      
+        
+        // if geocode success
+        var pickupadd=results[0].address_components[6].long_name;         // if address found, pass to processing function
         console.log("pickupadd",pickupadd);
         $scope.info.pickup_location = pickupadd;
 
@@ -579,9 +582,9 @@ angular.module('comparetravel', ['angular.filter'])
     }); 
     geocoder.geocode({'latLng': droplocation}, function (results, status) {
       if(status == google.maps.GeocoderStatus.OK) {           // if geocode success
-        var dropadd=results[0].formatted_address;         // if address found, pass to processing function
+        var dropadd=results[0].address_components[6].long_name;         // if address found, pass to processing function
         console.log("dropadd",dropadd);
-        $scope.info.drop_location=dropadd;
+        $scope.info.drop_location= dropadd;
 
       }
     }); 
