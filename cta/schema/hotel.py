@@ -41,14 +41,6 @@ class CollectionProductSchema(ma.ModelSchema):
         exclude = ('updated_at', 'created_at')
 
 
-class HotelCollectionSchema(ma.ModelSchema):
-    products = ma.Nested(CollectionProductSchema, many=True)
-
-    class Meta:
-        model = HotelCollection
-        exclude = ('updated_at', 'created_at', 'hotel')
-
-
 class ImageSchema(ma.ModelSchema):
     class Meta:
         model = Image
@@ -87,11 +79,18 @@ class RoomSchema(ma.ModelSchema):
 
 class HotelSchema(ma.ModelSchema):
     amenities = ma.Nested(AmenitySchema, many=False)
-    collection = ma.Nested(HotelCollectionSchema, many=False)
     images = ma.Nested(ImageSchema, many=True)
     rooms = ma.Nested(RoomSchema, many=True)
-
 
     class Meta:
         model = Hotel
         exclude = ('updated_at', 'created_at')
+
+
+class HotelCollectionSchema(ma.ModelSchema):
+    products = ma.Nested(CollectionProductSchema, many=True)
+    hotels = ma.Nested(HotelSchema, many=True)
+
+    class Meta:
+        model = HotelCollection
+        exclude = ('updated_at', 'created_at', 'hotel')

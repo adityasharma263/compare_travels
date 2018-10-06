@@ -91,35 +91,12 @@ def hotel_api():
         "longitude": json.dumps(hotel.get("longitude", None)),
         "latitude": json.dumps(hotel.get("latitude", None)),
         "star": hotel.get("star", None),
+        "collection_id": hotel.get("collection_id", None)
         }
+
         post = Hotel(**hotel_obj)
         post.save()
         hotel_result = HotelSchema().dump(post)
-        if hotel.get("collection"):
-            collection = hotel.get("collection", None)
-            collection_obj = {
-                "hotel_id": hotel_result.data['id'],
-                "collection_name": collection.get("collection_name", None),
-                "featured": collection.get("featured", None),
-                "desc": collection.get("desc", None),
-                "image": collection.get("image", None),
-            }
-            post = HotelCollection(**collection_obj)
-            post.save()
-            collection_result = HotelCollectionSchema().dump(post)
-            if collection.get("products"):
-                products = collection.get("products")
-                for product in products:
-                    product_obj = {
-                        "hotel_collection_id": collection_result.data['id'],
-                        "product_name": product.get("product_name", None),
-                        "product_url": product.get("product_url", None),
-                        "featured_product": product.get("featured_product", None),
-                        "product_desc": product.get("product_desc", None),
-                        "product_image": product.get("product_image", None),
-                    }
-                    post = CollectionProduct(**product_obj)
-                    post.save()
         if hotel.get("amenities"):
             amenity = hotel.get("amenities", None)
             amenity_obj = {
@@ -205,8 +182,16 @@ def hotel_collection_api():
         result = HotelCollectionSchema(many=True).dump(data)
         return jsonify({'result': {'collection': result.data}, 'message': "Success", 'error': False})
     else:
-        post = HotelCollection(**request.json)
+        collection = request.json
+        products = collection.get("products", None)
+        collection.pop('products', None)
+        post = HotelCollection(**collection)
         post.save()
+        for product in products:
+            product["collection_id"] = post.id
+            product_post = CollectionProduct(**product)
+            post.product.append(product_post)
+            product_post.save()
         result = HotelCollectionSchema().dump(post)
         return jsonify({'result': {'collection': result.data}, 'message': "Success", 'error': False})
 
@@ -225,6 +210,9 @@ def hotel_collection_id(id):
         if not collection:
             return jsonify({'result': {}, 'message': "No Found", 'error': True})
         else:
+            put = Hotel.query.filter_by(collection_id=collection.id).update({"collection_id": None})
+            if put:
+                Hotel.update_db()
             CollectionProduct.query.filter_by(hotel_collection_id=collection.id).delete()
             HotelCollection.delete_db(collection)
         return jsonify({'result': {}, 'message': "Success", 'error': False})

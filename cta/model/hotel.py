@@ -22,10 +22,10 @@ class Hotel(Base):
     address = db.Column(db.String, nullable=True)
     images = db.relationship('Image', backref='hotel')
     rooms = db.relationship('Room', backref='hotel')
-    collection = db.relationship('HotelCollection', uselist=False)
     latitude = db.Column('latitude', db.Float(asdecimal=True), nullable=True)
     longitude = db.Column('longitude', db.Float(asdecimal=True), nullable=True)
     amenities = db.relationship('Amenity', uselist=False, backref='hotel')
+    collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'), unique=True, nullable=True)
 
 
     def __init__(self, *args, **kwargs):
@@ -38,12 +38,13 @@ class Hotel(Base):
 class HotelCollection(Base):
     __tablename__ = 'hotel_collection'
 
-    hotel_id = db.Column(db.Integer, db.ForeignKey('hotel.id'), unique=True, nullable=True)
+
     collection_name = db.Column(db.String, nullable=True)
     featured = db.Column(db.Boolean, default=False, nullable=True)
     desc = db.Column(db.Text, nullable=True)
     image = db.Column(db.String, nullable=True)
     products = db.relationship('CollectionProduct', backref='hotel_collection')
+    hotels = db.relationship('Hotel', backref='hotel_collection')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
