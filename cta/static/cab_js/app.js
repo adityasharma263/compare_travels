@@ -969,26 +969,21 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.cab_types = Constants.Cab_types;
     $scope.cabs={};
 
-    $scope.cab.images = [
-      {
-        "cab": null,
-        "image_url": ""
-      }
-    ]
+    
     $scope.cab = {
       association: [{
 
         "collections": {
 
         },
-        "product": {
+        "products": {
 
         }
       }]
     };
-    $http.get("/api/v1/cab/product")
+    $http.get("/api/v1/cab/collection/product")
       .then(function (res) {
-        $scope.cuisine = res.data.result.cuisine;
+        $scope.product  = res.data.result.product;
       }, function (err) {
         console.log(err);
       });
@@ -1117,31 +1112,35 @@ angular.module('comparetravel', ['angular.filter'])
       //$scope.cab.city = $scope.cab.city.toLowerCase();
       console.log(data);
       
-      $http({
-        method: 'POST',
-        url: url,
-        data: data
-      }).then(function (res) {
-        console.log(res);
+      // $http({
+      //   method: 'POST',
+      //   url: url,
+      //   data: data
+      // }).then(function (res) {
+      //   console.log(res);
         
-        createToast("'cab successfully created!!!'","green");
+      //   createToast("'cab successfully created!!!'","green");
   
-        },
-        // failed callback
-        function (req) {
-         createToast("'Something went wrong!!!'","red");
-        })
+      //   },
+      //   // failed callback
+      //   function (req) {
+      //    createToast("'Something went wrong!!!'","red");
+      //   })
     }
+    $scope.cab.images = [
+      {
+        "image_url": ""
+      }
+    ]
 
     $scope.addImg=function(){
-        var addImages = {
+      var addImages = {
 
-          "cab": null,
-          "image_url": ""
-        }
-        addImages.cab=$scope.cab.id;
-        $scope.cab.images.push(addImages);
-        createToast("'Image Added!!'","green");
+        "image_url": ""
+      }
+      addImages.cab=$scope.cab.id;
+      $scope.cab.images.push(addImages);
+      createToast("'Image Added!!'","green");
     }
   
     
@@ -1179,7 +1178,7 @@ angular.module('comparetravel', ['angular.filter'])
         "collections": {
 
         },
-        "product": {
+        "products": {
 
         }
       }
