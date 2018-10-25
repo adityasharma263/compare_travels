@@ -59,7 +59,7 @@ angular.module('comparetravel', ['angular.filter'])
   } 
 
   $scope.search = function()  {
-    $scope.hotel.search = $scope.hotel.search.toLowerCase();
+    // $scope.hotel.search = $scope.hotel.search.toLowerCase();
     console.log("$scope.hotel",$scope.hotel);
   $http({
     method: 'POST',
