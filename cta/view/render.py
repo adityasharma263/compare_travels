@@ -737,3 +737,9 @@ def detail_sight_seeing():
     return render_template('cab/detail_sight_seeing.html')
     
 
+#=========================== Holiday Package =======================================
+
+
+@app.route("/admin/package", methods=['GET'])
+def admin_package():
+    return render_template("Holiday_package/package_Dashboard.html")

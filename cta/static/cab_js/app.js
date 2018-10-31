@@ -1112,20 +1112,20 @@ angular.module('comparetravel', ['angular.filter'])
       //$scope.cab.city = $scope.cab.city.toLowerCase();
       console.log(data);
       
-      // $http({
-      //   method: 'POST',
-      //   url: url,
-      //   data: data
-      // }).then(function (res) {
-      //   console.log(res);
+      $http({
+        method: 'POST',
+        url: url,
+        data: data
+      }).then(function (res) {
+        console.log(res);
         
-      //   createToast("'cab successfully created!!!'","green");
+        createToast("'cab successfully created!!!'","green");
   
-      //   },
-      //   // failed callback
-      //   function (req) {
-      //    createToast("'Something went wrong!!!'","red");
-      //   })
+        },
+        // failed callback
+        function (req) {
+         createToast("'Something went wrong!!!'","red");
+        })
     }
     $scope.cab.images = [
       {

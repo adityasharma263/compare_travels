@@ -1,0 +1,352 @@
+{% extends '/Holiday_package/components/dashboard_header.html' %} {% block controller%}dashboardController{% endblock %} {% block
+    content%}
+    <h3>Enter Holiday Package Details</h3>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <!-- <form> -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" ng-model="packageData.name" ng-required="true">
+    
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Rating(out of 5.0)</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.rating" ng-required="true">
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" ng-model="packageData.desc" ng-required="true"></textarea>
+            </div>
+    
+            
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="from-group">
+                        <label>Website</label>
+                        <input type="text" class="form-control" ng-model="packageData.website" placeholder="http://wwww.example.com">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Latitude</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.latitude" ng-required="true">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Longitude</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.longitude" ng-required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>About Place</label>
+                        <textarea class="form-control" ng-model="packageData.about_place" ng-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Location</label>
+                    <input type="text" class="form-control" ng-model="packageData.location">
+                </div>
+            </div>
+    
+    
+    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Exclusion Points</label>
+                        <input type="number" class="form-control" ng-model="packageData.exclusion_points" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Inclusion Points</label>
+                        <input type="text" class="form-control" ng-model="packageData.inclusion_points">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Best time to travel</label>
+                        <input type="date" class="form-control" ng-model="packageData.best_time_to_travel" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>First date of availability</label>
+                        <input type="date" class="form-control" ng-model="packageData.first_date_of_availability">
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Last date of availability</label>
+                        <input type="date" class="form-control" ng-model="packageData.last_date_of_availability" />
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Day wise schedule</label>
+                        <input type="date" class="form-control" ng-model="packageData.day_wise_schedule">
+                    </div>
+                </div> -->
+            </div>
+    
+    
+            <!-- <fieldset>
+                <h4>Amenity</h4>
+                <div class="row">
+    
+                    <div class="col-sm-4 panel h25" ng-repeat=" (amenity_key, amenity_value) in  amenities">
+    
+                        <label>
+                            [[amenity_key]]
+                            <input type="checkbox" ng-model="packageData.amenities[amenity_key]" ng-true-value="true" ng-false-value="false" ng-disabled="disable_amenity">
+                        </label>
+                    </div>
+                </div>
+    
+            </fieldset> -->
+    
+            
+            <div class="row">
+
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <h4>Collection</h4>
+                        <div ng-show="!$parent.addNewCollection[$index]">
+                            <select ng-model="packageData.collections.collection_id" ng-disabled="disable_association">
+                                <option value disabled selected> -- Select Collection --</option>
+
+                                <option value="[[collectionData.id]]" ng-repeat="collectionData in collection">[[collectionData.collection]]</option>
+                            </select>
+                            or
+                            <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = true" ng-disabled="disable_association">Add Collection</button>
+                        </div>
+                        <div ng-show="$parent.addNewCollection[$index]">
+                            <label>Collection name</label>
+                            <input type="text" ng-model="association.collections.collection" class="form-control">
+                            <label>Image</label>
+                            <input type="text" ng-model="association.collections.image" class="form-control">
+                            <label>Short description</label>
+                            <input type="text" ng-model="association.collections.desc" class="form-control">
+                            <label>featured on home page?</label>
+                            <input type="checkbox" ng-model="association.collections.featured" ng-true-value="true" ng-false-value="false">
+                            <br>
+                            <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = false;">cancel</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            
+    
+            <div>
+                <div ng-repeat="imageData in packageData.images" class="mt10">
+                    <button class="btn btn-danger pull-right" ng-click="packageData.images.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_images">remove</button>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Image Type</label>
+                            <br>
+                            <select ng-model="imageData.image_type" ng-required="true" ng-disabled="disable_images">
+                                <option value disabled>Select image type for package</option>
+                                <option value="[[image_enum]]" ng-repeat="(image_enum, image_type) in image_types">[[image_type]]</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>
+                                URL
+                                <input type="text" ng-model="imageData.image_url" class="form-control" ng-disabled="disable_images" ng-required="true">
+                                <img class="img-responsive img-thumbnail img-small50" ng-show="imageData.image_url" src="[[imageData.image_url]]" alt="[[imageData.image_url]]">
+                            </span>
+                        </div>
+                    </div>
+    
+    
+    
+    
+                </div>
+    
+                <button class="btn btn-default" ng-click="addMorepackageImages()" ng-disabled="disable_images">Add More Images</button>
+    
+    
+            </div>
+    
+    
+            <div class="mt10" ng-repeat=" deal in packageData.deals">
+    
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="btn btn-danger pull-right" ng-click="packageData.deals.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_deal">remove</span>
+                        <h4>Deal #[[$index+1]]</h4>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>
+                                Cancellation Charges
+                                <input type="text" class="form-control" ng-model="deal.cancellation_charges ng-required="true" ng-disabled="disable_deal">
+                            </label>
+                        </div>
+    
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Price Per Person
+                            <input type="number" class="form-control" ng-model="deal.price_per_person" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Total Price
+                            <input type="number" class="form-control" ng-model="deal.total_price" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+    
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>
+                            Package deal url
+                            <br>
+                        </label>
+                        <input class="form-control" ng-model="deal.package_deal_url" ng-required="true" ng-disabled="disable_deal" />
+                    </div>
+                </div>
+                <label>is partner? 
+                    <input type="checkbox" ng-model="packageData.is_partner" ng-true-value="true" ng-false-value="false">
+                </label>
+                <label>featured deal? 
+                    <input type="checkbox" ng-model="packageData.featured_deal" ng-true-value="true" ng-false-value="false">
+                </label>
+            </div>
+            <button class="btn btn-default" ng-click="addMoreDeal()" ng-disabled="disable_deal">Add More Deal</button>
+    
+    
+    
+    
+    
+    
+    
+    
+            <div class="form-group">
+               
+            </div>
+    
+    
+            <!-- <div class="row">
+                <div class="col-sm-6" ng-show="!showAddBranch">
+                    <label>Add Branch</label>
+                    <select ng-model="packageData.restaurent_chain.package_chain_id">
+                        <option value disabled>-- select branch--</option>
+                        <option ng-value="[[chain.id]]" ng-repeat="chain in restaurent_chain">[[chain.package_chain_name]]</option>
+                    </select>
+                    or
+                    <button class="btn btn-default" ng-click="showAddBranch = true;">Add Branch</button>
+                </div>
+    
+                <div class="" ng-show="showAddBranch">
+                    <label> Category </label>
+                    <select ng-model="packageData.restaurent_chain.package_chain_category">
+                        <option value disabled>-- Select Category --</option>
+                        <option value="[[$index+1]]" ng-repeat="category in categories">[[category]]</option>
+                    </select>
+    
+                    <label>Description</label>
+                    <input type="text" class="form-control" ng-model="packageData.restaurent_chain.package_chain_desc">
+    
+                    <label>Branch Name</label>
+                    <input type="text" class="form-control" ng-model="packageData.restaurent_chain.package_chain_name">
+                    <!-- <button class="btn btn-default" ng-click="showAddBranch = false;"></button> -->
+                    <!-- <button class="btn btn-default" ng-click="showAddBranch = false;">Cancel</button>
+                </div>
+            </div> --> 
+    
+    
+    
+    
+    
+            <button class="btn btn-default" ng-click="this[functionCalling]()">[[functionCalling]]</button>
+            <button class="btn btn-default" ng-click="functionCalling = 'Add'" ng-show="functionCalling == 'Update'">Cancel</button>
+            <!-- </form> -->
+            <hr>
+        </div>
+    
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <!-- <select ng-model="packageLocation" ng-change="getpackageByLocation(packageLocation)">
+                        <option value disabled>--Select Location--</option>
+                        <option ng-value="[[location]]" ng-repeat="location in locations">[[location]]</option>
+                    </select> -->
+    
+                    <div class="dropdown pull-right makePaymentDropdownMainDiv" style="width:100%;" auto-close="outsideClick" ng-init="userLocation = 'Delhi'">
+    
+                        <input ng-cloak style="font-size:12px;" disable-auto-close type="search" data-toggle="dropdown" ng-model="serchFilter" id="individualDrop"
+                            class="dropdown-toggle makePaymentDropdownSearchBox form-control" placeholder="Enter a city" />
+    
+                        <ul class="dropdown-menu makePaymentDropdownUlStyle" role="menu" aria-labelledby="individualDrop">
+                            <li role="presentation">
+                                <a role="menuitem" href="javascript:;" ng-click="$parent.getpackageByLocation()">All location</a>
+                            </li>
+                            <li role="presentation" ng-repeat="indi in locations | filter: serchFilter">
+                                <a role="menuitem" href="javascript:;" ng-click="$parent.getpackageByLocation(indi)">[[indi]]</a>
+                            </li>
+                        </ul>
+                    </div>
+    
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="search" placeholder="search packages...">
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="row">
+                <div class="col-sm-4" ng-repeat="package in packages | filter: search">
+                    <div class="thumbnail">
+                        <img ng-src="[[package.images[0].image_url]]" alt="">
+                        <div class="caption">
+                            <h4>[[package.name]]</h4>
+                            <p>
+                                <span>location :
+                                    <span>[[package.city]]</span>
+                                </span>
+                            </p>
+                            <p>
+                                <button class="btn btn-primary" role="button" ng-click="$parent.editpackage(package)">Edit</button>
+                                <button class="btn btn-default" role="button" ng-click="deletepackage(package.id, $index)">Delete</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    </div>
+    
+    {% endblock%}
