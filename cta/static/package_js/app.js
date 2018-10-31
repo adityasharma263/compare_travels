@@ -5,7 +5,7 @@ var app = angular.module("packageApp", ['angular.filter'])
   }])
 
   .controller("dashboardController", ["$scope", "$http",  function ($scope, $http) {
-
+    $scope.addWebsite= true;
     var put_package_id = null;
     $scope.packageData = {
         "collections": {
