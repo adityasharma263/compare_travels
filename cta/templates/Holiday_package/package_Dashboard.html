@@ -20,6 +20,36 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Review</label>
+                        <textarea type="text" class="form-control" ng-model="packageData.review" ng-required="true"></textarea>
+    
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Weather</label>
+                        <input type="text" class="form-control" step="any" ng-model="packageData.weather" ng-required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Travel guide PDF link</label>
+                        <input type="text" class="form-control" ng-model="packageData.travel_guide_PDF_link" ng-required="true">
+    
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Street view</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.street_view" ng-required="true">
+                    </div>
+                </div>
+            </div>
     
     
             <div class="form-group">
@@ -63,7 +93,30 @@
                     <input type="text" class="form-control" ng-model="packageData.location">
                 </div>
             </div>
-    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Cancellation policy</label>
+                        <textarea class="form-control" ng-model="packageData.cancellation_policy" ng-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label>Helpline contacts</label>
+                    <input type="tel" class="form-control" ng-model="packageData.helpline_contacts">
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Cancellation policy</label>
+                        <textarea class="form-control" ng-model="packageData.cancellation_policy" ng-required="true"></textarea>
+                    </div>
+                </div> -->
+                <div class="col-sm-6">
+                    <label>Distance</label>
+                    <input type="text" class="form-control" ng-model="packageData.distance"">
+                </div>
+            </div>
     
     
             <div class="row">
@@ -110,6 +163,34 @@
                     </div>
                 </div> -->
             </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>No. of days</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.no_of_days" ng-required="true">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>No. of nights</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.no_of_nights" ng-required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label> No. of people</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.no_of_people" ng-required="true">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>No. of nights</label>
+                        <input type="number" class="form-control" step="any" ng-model="packageData.no_of_nights" ng-required="true">
+                    </div>
+                </div>
+            </div>
     
     
             <!-- <fieldset>
@@ -145,13 +226,13 @@
                         </div>
                         <div ng-show="$parent.addNewCollection[$index]">
                             <label>Collection name</label>
-                            <input type="text" ng-model="association.collections.collection" class="form-control">
+                            <input type="text" ng-model="packageData.collections.collection" class="form-control">
                             <label>Image</label>
-                            <input type="text" ng-model="association.collections.image" class="form-control">
+                            <input type="text" ng-model="packageData.collections.image" class="form-control">
                             <label>Short description</label>
-                            <input type="text" ng-model="association.collections.desc" class="form-control">
+                            <input type="text" ng-model="packageData.collections.desc" class="form-control">
                             <label>featured on home page?</label>
-                            <input type="checkbox" ng-model="association.collections.featured" ng-true-value="true" ng-false-value="false">
+                            <input type="checkbox" ng-model="packageData.collections.featured" ng-true-value="true" ng-false-value="false">
                             <br>
                             <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = false;">cancel</button>
 
@@ -159,10 +240,6 @@
                     </div>
                 </div>
             </div>
-    
-    
-            
-    
             <div>
                 <div ng-repeat="imageData in packageData.images" class="mt10">
                     <button class="btn btn-danger pull-right" ng-click="packageData.images.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_images">remove</button>
@@ -190,10 +267,74 @@
                 </div>
     
                 <button class="btn btn-default" ng-click="addMorepackageImages()" ng-disabled="disable_images">Add More Images</button>
-    
-    
             </div>
+
+            <div class="mt10" ng-repeat=" bus in packageData.buses">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="btn btn-danger pull-right" ng-click="packageData.buses.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_bus">remove</span>
+                        <h4>Bus #[[$index+1]]</h4>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>
+                                Bus service provider
+                                <input type="text" class="form-control" ng-model="bus.bus_service_provider" ng-required="true" ng-disabled="disable_deal">
+                            </label>
+                        </div>
     
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Bus drop date
+                            <input type="date" class="form-control" ng-model="bus.bus_drop_date" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Bus pickup date
+                            <input type="date" class="form-control" ng-model="bus.bus_pickup_date" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+    
+                </div>
+            </div>
+            <button class="btn btn-default" ng-click="addMoreBus()" ng-disabled="disable_bus">Add More Bus</button>
+        
+            <div class="mt10" ng-repeat=" cab in packageData.cabs">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="btn btn-danger pull-right" ng-click="packageData.cabs.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_cab">remove</span>
+                        <h4>Cab #[[$index+1]]</h4>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>
+                                Cab service provider
+                                <input type="text" class="form-control" ng-model="cab.cab_service_provider" ng-required="true" ng-disabled="disable_deal">
+                            </label>
+                        </div>
+    
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Cab drop date
+                            <input type="date" class="form-control" ng-model="cab.cab_drop_date" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Cab pickup date
+                            <input type="date" class="form-control" ng-model="cab.cab_pickup_date" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+    
+                </div>
+            </div>
+            <button class="btn btn-default" ng-click="addMoreCab()" ng-disabled="disable_cab">Add More Cab</button>
+        
     
             <div class="mt10" ng-repeat=" deal in packageData.deals">
     
@@ -202,43 +343,34 @@
                         <span class="btn btn-danger pull-right" ng-click="packageData.deals.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_deal">remove</span>
                         <h4>Deal #[[$index+1]]</h4>
                     </div>
-                    <div class="row" ng-show="addWebsite">
+                    <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Website name:</label>
-                                <select class="form-control" ng-model="deal.website_id" ng-required="true" ng-disabled="disable_deal">
-                                    <option ng-repeat="obj in websites" value="[[obj.id]]">[[obj.website]]</option>
-                                </select>  
-                            </div>
-                        </div>      
-    
-                        <div class="col-sm-6">
-                            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#website" ng-click="show()">add new website</button>
-                        </div>
-                    
-                    </div>
-    
-                    <div id="website" class="collapse">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
+                                <div ng-show="!website">
+                                    <label>Website name:</label>
+                                    <select class="form-control" ng-model="deal.website_id" ng-required="true" ng-disabled="disable_deal">
+                                        <option ng-repeat="obj in websites" value="[[obj.id]]">[[obj.website]]</option>
+                                    </select>or
+                                    <button type="button" class="btn btn-default" ng-click="website=true" >add new website</button>
+                                </div>
+                                    
+                                <div ng-show="website">
                                     <label>Website name:</label>
                                     <input type="text" class="form-control" ng-model="deal.website.website" >           
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
                                     <label>Website logo image:</label>
                                     <input type="text" class="form-control" ng-model="deal.website.logo_image">
+                                    <label>Website Url:</label>
+                                    <input type="text" class="form-control" ng-model="deal.website.website_url">
+                                    <button class="btn btn-default" ng-click="website = false;">cancel</button>
                                 </div>
                             </div>
-                        </div>
+                        </div>      
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>
                                 Cancellation Charges
-                                <input type="text" class="form-control" ng-model="deal.cancellation_charges ng-required="true" ng-disabled="disable_deal">
+                                <input type="text" class="form-control" ng-model="deal.cancellation_charges" ng-required="true" ng-disabled="disable_deal">
                             </label>
                         </div>
     

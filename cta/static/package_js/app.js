@@ -5,7 +5,6 @@ var app = angular.module("packageApp", ['angular.filter'])
   }])
 
   .controller("dashboardController", ["$scope", "$http",  function ($scope, $http) {
-    $scope.addWebsite= true;
     var put_package_id = null;
     $scope.packageData = {
         "collections": {
@@ -13,7 +12,6 @@ var app = angular.module("packageApp", ['angular.filter'])
         }
     };
 
-    $scope.packageData.restaurent_chain = {};
 
     $scope.image_types = {
       1: "Ambience",
@@ -29,26 +27,59 @@ var app = angular.module("packageApp", ['angular.filter'])
       }
     ]
 
+    $scope.packageData.buses = [
+      {
+        "bus_drop_date": null, 
+        "bus_pickup_date": null, 
+        "bus_service_provider": "", 
+        
+      }
+    ]
+    $scope.addMoreBus = function () {
+      var moreBuses = {
+        "bus_drop_date": null, 
+        "bus_pickup_date": null, 
+        "bus_service_provider": "", 
 
+      }
+
+      $scope.packageData.buses.push(moreBuses);
+    };
+    $scope.packageData.cabs = [
+      {
+        "bus_drop_date": null, 
+        "bus_pickup_date": null, 
+        "bus_service_provider": "", 
+        
+      }
+    ]
+    $scope.addMoreCab = function () {
+      var moreCabs = {
+        "cab_drop_date": null, 
+        "cab_pickup_date": null, 
+        "cab_service_provider": "", 
+
+      }
+
+      $scope.packageData.cabs.push(moreCabs);
+    };
     $scope.packageData.deals = [
       {
         "cancellation_charges": null, 
         "featured_deal": null, 
-        "flight": null, 
         "is_partner": null, 
         "package_deal_url": null, 
         "price_per_person": null, 
         "total_price": null, 
         
-
       }
     ]
+   
 
     $scope.addMoreDeal = function () {
       var moreDeals = {
         "cancellation_charges": null, 
         "featured_deal": null, 
-        "flight": null, 
         "is_partner": null, 
         "package_deal_url": null, 
         "price_per_person": null, 
@@ -104,19 +135,19 @@ var app = angular.module("packageApp", ['angular.filter'])
 
     $scope.Add = function () {
       // $scope.packageData.Deals = $scope.Deals;
-      console.log($scope.packageData);
+      console.log("package json",$scope.packageData);
 
       // return;
-      $http.post("/api/v1/package", $scope.packageData)
-        .then(function (res) {
-          // $scope.packages.push(res.data.result.package);
-          console.log(res);
-          alert("package added!");
-        }, function (err) {
-          alert("Error =>\n" + err);
+      // $http.post("/api/v1/package", $scope.packageData)
+      //   .then(function (res) {
+      //     // $scope.packages.push(res.data.result.package);
+      //     console.log(res);
+      //     alert("package added!");
+      //   }, function (err) {
+      //     alert("Error =>\n" + err);
 
-          console.log(err);
-        })
+      //     console.log(err);
+      //   })
     }
     $scope.Update = function () {
 
