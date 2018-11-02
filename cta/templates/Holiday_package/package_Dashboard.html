@@ -46,7 +46,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Street view</label>
-                        <input type="number" class="form-control" step="any" ng-model="packageData.street_view" ng-required="true">
+                        <input type="text" class="form-control" step="any" ng-model="packageData.street_view" ng-required="true">
                     </div>
                 </div>
             </div>
@@ -106,15 +106,15 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-sm-6">
+                <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Cancellation policy</label>
-                        <textarea class="form-control" ng-model="packageData.cancellation_policy" ng-required="true"></textarea>
+                        <label>Days wise schedule</label>
+                        <input type="number" step="any" class="form-control" ng-model="packageData.day_wise_schedule">
                     </div>
-                </div> -->
+                </div>
                 <div class="col-sm-6">
                     <label>Distance</label>
-                    <input type="text" class="form-control" ng-model="packageData.distance"">
+                    <input type="number" step="any" class="form-control" ng-model="packageData.distance">
                 </div>
             </div>
     
@@ -184,12 +184,6 @@
                         <input type="number" class="form-control" step="any" ng-model="packageData.no_of_people" ng-required="true">
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>No. of nights</label>
-                        <input type="number" class="form-control" step="any" ng-model="packageData.no_of_nights" ng-required="true">
-                    </div>
-                </div>
             </div>
     
     
@@ -209,7 +203,7 @@
             </fieldset> -->
     
             
-            <div class="row">
+            <!-- <div class="row">
 
                 <div class="col-sm-6">
 
@@ -239,7 +233,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div>
                 <div ng-repeat="imageData in packageData.images" class="mt10">
                     <button class="btn btn-danger pull-right" ng-click="packageData.images.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_images">remove</button>
@@ -268,7 +262,122 @@
     
                 <button class="btn btn-default" ng-click="addMorepackageImages()" ng-disabled="disable_images">Add More Images</button>
             </div>
-
+            <div class="mt10" ng-repeat=" flight in packageData.flights">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="btn btn-danger pull-right" ng-click="packageData.flights.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_flight">remove</span>
+                        <h4>Flight #[[$index+1]]</h4>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>
+                                Flight number
+                                <input type="number" class="form-control" ng-model="flight.flight_number" ng-required="true" ng-disabled="disable_deal">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Flight description
+                            <input type="text" class="form-control" ng-model="flight.flight_desc" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Flight fleet carrier
+                            <input type="text" class="form-control" ng-model="flight.flight_fleet_carrier" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Depart airport
+                            <input type="text" class="form-control" ng-model="flight.depart_airport" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Landing airport
+                            <input type="text" class="form-control" ng-model="flight.landing_airport" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Depart date
+                            <input type="date" class="form-control" ng-model="flight.depart_date" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Landing date
+                            <input type="date" class="form-control" ng-model="flight.landing_date" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Depart from city
+                            <input type="text" class="form-control" ng-model="flight.depart_from_city" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Land to city
+                            <input type="text" class="form-control" ng-model="flight.land_to_city" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            Journey duration(in hr)
+                            <input type="number" step="any" class="form-control" ng-model="flight.journey_duration" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>
+                            No of stops
+                            <input type="text" class="form-control" ng-model="flight.no_of_stops" ng-required="true" ng-disabled="disable_deal">
+                        </label>
+                    </div>
+                    <label>International ? 
+                        <input type="checkbox" ng-model="flight.international" ng-true-value="true" ng-false-value="false">
+                    </label>
+                    <div class="mt10" ng-repeat="stop in flight.stops">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <span class="btn btn-danger pull-right" ng-click="flight.stops.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_bus">remove</span>
+                                <h4>Stop #[[$index+1]]</h4>
+                            </div>
+                            
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>
+                                        Stop landing airport
+                                        <input type="text" class="form-control" ng-model="stop.stop_landing_airport" ng-required="true" ng-disabled="disable_deal">
+                                    </label>
+                                </div>
+            
+                            </div>
+                            <div class="col-sm-4">
+                                <label>
+                                    Stop landing date
+                                    <input type="date" class="form-control" ng-model="stop.stop_landing_date" ng-required="true" ng-disabled="disable_deal">
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>
+                                    Stop place
+                                    <input type="date" class="form-control" ng-model="stop.stop_place" ng-required="true" ng-disabled="disable_deal">
+                                </label>
+                            </div>
+            
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-8">
+                        <button class="btn btn-default" ng-click="addMoreStop($index)" ng-disabled="disable_bus">Add More Stop</button>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-default" ng-click="addMoreFlights()" ng-disabled="disable_flight">Add More Flight</button>
+            
             <div class="mt10" ng-repeat=" bus in packageData.buses">
                 <div class="row">
                     <div class="col-sm-12">

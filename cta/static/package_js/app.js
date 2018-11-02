@@ -6,11 +6,9 @@ var app = angular.module("packageApp", ['angular.filter'])
 
   .controller("dashboardController", ["$scope", "$http",  function ($scope, $http) {
     var put_package_id = null;
-    $scope.packageData = {
-        "collections": {
+   
 
-        }
-    };
+    $scope.packageData = {};
 
 
     $scope.image_types = {
@@ -27,6 +25,68 @@ var app = angular.module("packageApp", ['angular.filter'])
       }
     ]
 
+    $scope.packageData.flights = [
+      {
+        "depart_airport": null, 
+        "depart_date": null, 
+        "depart_from_city": null, 
+        "flight_desc": "", 
+        "flight_fleet_carrier": null, 
+        "flight_number": null, 
+        "international": null, 
+        "journey_duration": null, 
+        "land_to_city": null, 
+        "landing_airport": null, 
+        "landing_date": null, 
+        "no_of_stops": null, 
+        "stops":[
+          {
+            "stop_landing_airport": null, 
+            "stop_landing_date": null, 
+            "stop_place": ""
+          }
+        ]
+        
+      }
+    ]
+    $scope.addMoreFlights = function () {
+
+      var moreFlights = {
+        "depart_airport": null, 
+        "depart_date": null, 
+        "depart_from_city": null, 
+        "flight_desc": "", 
+        "flight_fleet_carrier": null, 
+        "flight_number": null, 
+        "international": null, 
+        "journey_duration": null, 
+        "land_to_city": null, 
+        "landing_airport": null, 
+        "landing_date": null, 
+        "no_of_stops": null, 
+        "stops":[
+          {
+            "stop_landing_airport": null, 
+            "stop_landing_date": null, 
+            "stop_place": ""
+          }
+        ]
+
+      }
+
+      $scope.packageData.flights.push(moreFlights);
+    };
+   
+    $scope.addMoreStop = function (index) {
+      var moreStops = {
+        "stop_landing_airport": null, 
+        "stop_landing_date": null, 
+        "stop_place": ""
+
+      }
+      $scope.packageData.flights[index].stops.push(moreStops);
+
+    };
     $scope.packageData.buses = [
       {
         "bus_drop_date": null, 
