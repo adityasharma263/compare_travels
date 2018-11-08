@@ -195,10 +195,10 @@ var app = angular.module("packageApp", ['angular.filter'])
 
     $scope.Add = function () {
       // $scope.packageData.Deals = $scope.Deals;
-      console.log("package json",$scope.packageData);
+      console.log("package json",JSON.stringify($scope.packageData));
 
       // return;
-      // $http.post("/api/v1/package", $scope.packageData)
+      // $http.post("http://127.0.0.1:5000/api/v1/package", $scope.packageData)
       //   .then(function (res) {
       //     // $scope.packages.push(res.data.result.package);
       //     console.log(res);
@@ -208,6 +208,43 @@ var app = angular.module("packageApp", ['angular.filter'])
 
       //     console.log(err);
       //   })
+      // $http({
+      //   method: 'POST',
+      //   url: 'http://127.0.0.1:5000/api/v1/package',
+      //   contentType : "text/plain",
+      //   data:  JSON.stringify($scope.packageData),
+      //   crossDomain: true,
+      // }).then(function (res) {
+      //   console.log(res);
+        
+      //   // createToast("'hotel successfully created!!!'","green");
+  
+      //   },
+      //   // failed callback
+      //   function (err) {
+      //     alert("Error =>\n" + err);
+
+      //     console.log(err);
+      //   })
+      // $.ajax({
+      //   type: "POST",
+      //   url: "http://127.0.0.1:5000/api/v1/package",
+      //   contentType: "text/plain",
+      //   data: JSON.stringify($scope.packageData),
+
+      //   crossDomain: true,
+      // }).then(function (res) {
+      //   console.log(res);
+        
+      //   // createToast("'hotel successfully created!!!'","green");
+  
+      //   },
+      //   // failed callback
+      //   function (err) {
+      //     alert("Error =>\n" + err);
+
+      //     console.log(err);
+      //   });
     }
     $scope.Update = function () {
 
@@ -228,7 +265,7 @@ var app = angular.module("packageApp", ['angular.filter'])
           console.log(err);
         })
 
-
+        
 
 
     }
