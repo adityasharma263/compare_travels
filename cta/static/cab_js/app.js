@@ -611,7 +611,7 @@ angular.module('comparetravel', ['angular.filter'])
           if (status == google.maps.GeocoderStatus.OK) {
              $scope.platitude = results[0].geometry.location.lat();
              $scope.plongitude = results[0].geometry.location.lng();
-             alert($scope.platitude);
+            
              console.log("$scope.platitude",$scope.platitude);
             
           } 
@@ -623,7 +623,7 @@ angular.module('comparetravel', ['angular.filter'])
           if (status == google.maps.GeocoderStatus.OK) {
               $scope.dlatitude = results[0].geometry.location.lat();
               $scope.dlongitude = results[0].geometry.location.lng();
-              alert($scope.dlatitude);
+              
           } 
         }); 
         var str = document.location.search.split("&");
@@ -984,8 +984,10 @@ angular.module('comparetravel', ['angular.filter'])
     $http.get("/api/v1/cab/collection/product")
       .then(function (res) {
         $scope.product  = res.data.result.product;
+
       }, function (err) {
         console.log(err);
+
       });
 
     
@@ -1167,9 +1169,13 @@ angular.module('comparetravel', ['angular.filter'])
       $http.delete("/api/v1/cab/" + cabId)
         .then(function (res) {
           $scope.cabs.splice(index, 1);
-          alert("Deleted!!");
+    
+          createToast("'Deleted!!'","green");
+
         }, function (err) {
-          alert("err " + err);
+        
+         createToast("'Something went wrong!!!'","red");
+
         })
 
     }
@@ -1200,9 +1206,12 @@ angular.module('comparetravel', ['angular.filter'])
       $http.put("/api/v1/cab/" + put_cab_id, $scope.cab)
         .then(function (res) {
           console.log(res);
+         createToast("'Updated!!'","green");
 
         }, function (err) {
           console.log(err);
+         createToast("'Something went wrong!!!'","red");
+
         })
 
 
@@ -1256,7 +1265,13 @@ angular.module('comparetravel', ['angular.filter'])
   .controller("dashboardAmenityController", ["$scope", "$http", function ($scope, $http) {
     $scope.disable_update = true;
 
-    
+    var createToast=function(msg, color){
+      var x= document.getElementById("snackbar");
+      x.innerHTML=msg;
+      x.style.backgroundColor=color;
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
     $http.get("/api/v1/cab/amenity")
       .then(function (res) {
         $scope.amenity = res.data.result.amenities;
@@ -1290,7 +1305,7 @@ angular.module('comparetravel', ['angular.filter'])
 
     $scope.update = function () {
       var amenityId = $scope.cabData.amenities.id
-      delete $scope.cab.association;
+      // delete $scope.cab.association;
 
       delete $scope.cabData.amenities.id;
       delete $scope.cabData.amenities.cab;
@@ -1300,10 +1315,14 @@ angular.module('comparetravel', ['angular.filter'])
       $http.put("/api/v1/cab/amenity/" + amenityId, $scope.cabData.amenities)
         .then(function (res) {
           console.log(res);
-          alert("Updated!!")
+        
+         createToast("'Upadted!!'","green");
+
         }, function (err) {
-          alert("err = " + err.data);
+          
           console.log(err);
+         createToast("'Something went wrong!!!'","red");
+
         })
     }
 
@@ -1312,7 +1331,13 @@ angular.module('comparetravel', ['angular.filter'])
   .controller("dashboardImagesController", ["$scope", "$http", "$q", function ($scope, $http, $q) {
 
     
-   
+    var createToast=function(msg, color){
+      var x= document.getElementById("snackbar");
+      x.innerHTML=msg;
+      x.style.backgroundColor=color;
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
   
     $scope.disable_update = true;
     var cab_id = null;
@@ -1354,9 +1379,13 @@ angular.module('comparetravel', ['angular.filter'])
 
       $q.all(imageList)
         .then(function (res) {
-          alert("updated!!");
+      
+         createToast("'Updated!!'","green");
+
         }, function (err) {
-          alert("err =" + err)
+    
+         createToast("'Something went wrong!!!'","red");
+
           console.log(err);
         })
 
@@ -1367,10 +1396,14 @@ angular.module('comparetravel', ['angular.filter'])
       $http.delete("/api/v1/cab/image/" + imageId)
         .then(function (res) {
 
-          alert("delete");
+  
+         createToast("'deleted!!'","green");
+
 
         }, function (err) {
-          console.log(err)
+        
+         createToast("'Something went wrong!!!'","red");
+
         })
     }
 
@@ -1411,9 +1444,13 @@ angular.module('comparetravel', ['angular.filter'])
 
       $q.all(imageList)
         .then(function (res) {
-          alert("Added!!");
+    
+          createToast("'Image Added!!'","green");
+
         }, function (err) {
-          alert("err =" + err)
+      
+         createToast("'Something went wrong!!!'","red");
+
           console.log(err);
         })
 
@@ -1430,7 +1467,13 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.show=function(){
       $scope.myVar= false;
     }
-
+    var createToast=function(msg, color){
+      var x= document.getElementById("snackbar");
+      x.innerHTML=msg;
+      x.style.backgroundColor=color;
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
     $scope.editDeal = function (cabData) {
       console.log(cabData);
       $scope.disable_update = false;
@@ -1458,9 +1501,13 @@ angular.module('comparetravel', ['angular.filter'])
 
       $q.all(dealList)
         .then(function (res) {
-          alert("updated!!");
+          
+          createToast("'updated!!'","green");
+
         }, function (err) {
-          alert("err =" + err)
+      
+          createToast("'Something went wrong!!!'","red");
+
           console.log(err);
         })
 
@@ -1473,12 +1520,14 @@ angular.module('comparetravel', ['angular.filter'])
 
           $scope.cabData.deals.splice(index, 1)
 
-          alert("Deleted!!");
+          createToast("'Deleted'","green");
 
         },
         function (err) {
           console.log(err);
-          alert("err " + err.status + " (" + err.statusText + ")");
+         createToast("'Something went wrong!!!'","red");
+
+  
         })
     }
 
@@ -1560,10 +1609,14 @@ angular.module('comparetravel', ['angular.filter'])
 
       $q.all(dealList)
         .then(function (res) {
-          alert("Added!!");
+    
+          createToast("'Deal Added'","green");
+
         }, function (err) {
-          alert("err =" + err)
+      
           console.log(err);
+          createToast("'Something went wrong!!!'","red");
+
         })
     }
 
@@ -1590,7 +1643,13 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.addCollection = false;
     $scope.functionCall = "update";
     var cab_id = null;
-
+    var createToast=function(msg, color){
+      var x= document.getElementById("snackbar");
+      x.innerHTML=msg;
+      x.style.backgroundColor=color;
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    }
     $http.get("/api/v1/cab/collection")
       .then(function (res) {
         $scope.collections = res.data.result.collection;
@@ -1612,10 +1671,14 @@ angular.module('comparetravel', ['angular.filter'])
 
       $http.delete("/api/v1/cab/collection/" + collectionId)
         .then(function (res) {
-          alert("deleted!!");
+        
+         createToast("'Deleted!!'","green");
+
           $scope.collections.splice(index, 1);
         }, function (err) {
-          alert("err " + err)
+        
+         createToast("'Something went wrong!!!'","red");
+
         })
 
     }
@@ -1659,9 +1722,13 @@ angular.module('comparetravel', ['angular.filter'])
 
       $q.all(collectionList)
         .then(function (res) {
-          alert("Added!!");
+          
+         createToast("'Added!!'","green");
+
         }, function (err) {
-          alert("err =" + err)
+    
+         createToast("'Something went wrong!!!'","red");
+
           console.log(err);
         })
 
@@ -1677,10 +1744,14 @@ angular.module('comparetravel', ['angular.filter'])
 
       $http.put("/api/v1/cab/collection/" + collectionId, $scope.collectionData)
         .then(function (res) {
-          alert("updated!!");
+      
+         createToast("'Updated!!'","green");
+
 
         }, function (err) {
-          alert("err =" + err);
+          
+         createToast("'Something went wrong!!!'","red");
+
           console.log(err);
         })
 
