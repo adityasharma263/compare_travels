@@ -970,17 +970,17 @@ angular.module('comparetravel', ['angular.filter'])
     $scope.cabs={};
 
     
-    $scope.cab = {
-      association: [{
+    // $scope.cab = {
+    //   association: [{
 
-        "collections": {
+    //     "collections": {
 
-        },
-        "products": {
+    //     },
+    //     "products": {
 
-        }
-      }]
-    };
+    //     }
+    //   }]
+    // };
     $http.get("/api/v1/cab/collection/product")
       .then(function (res) {
         $scope.product  = res.data.result.product;
@@ -1179,24 +1179,24 @@ angular.module('comparetravel', ['angular.filter'])
         })
 
     }
-    $scope.addMoreAssociation = function () {
-      var addAssociation = {
-        "collections": {
+    // $scope.addMoreAssociation = function () {
+    //   var addAssociation = {
+    //     "collections": {
 
-        },
-        "products": {
+    //     },
+    //     "products": {
 
-        }
-      }
-      $scope.cab.association.push(addAssociation);
+    //     }
+    //   }
+    //   $scope.cab.association.push(addAssociation);
 
 
 
-    }
+    // }
     $scope.Update = function () {
 
       delete $scope.cab.amenities
-      delete $scope.cab.association;
+      delete $scope.cab.cab_collection;
       delete $scope.cab.deals;
       delete $scope.cab.id;
       delete $scope.cab.images;
@@ -1222,6 +1222,8 @@ angular.module('comparetravel', ['angular.filter'])
       $scope.functionCalling = "Update";
       $scope.disable_amenity = true;
       $scope.disable_images = true;
+      $scope.disable_collection = true;
+
       $scope.disable_deal=true;
       cabData.cab_type = cabData.cab_type + ""
       cabData.car_type = cabData.car_type + ""
@@ -1231,14 +1233,14 @@ angular.module('comparetravel', ['angular.filter'])
         cabData.deals[i].website_id = cabData.deals[i].website + ""
       }
 
-      for (i in cabData.association) {
-        cabData.association[i].collections.collection_id = cabData.association[i].collections.id + ""
-        cabData.association[i].cuisines.cuisine_id = cabData.association[i].cuisines.id + ""
-        cabData.association[i].collections.collection = null;
-        cabData.association[i].collections.image = null;
-        cabData.association[i].collections.desc = null;
-        cabData.association[i].collections.featured = null;
-      }
+      // for (i in cabData.association) {
+      //   cabData.association[i].collections.collection_id = cabData.association[i].collections.id + ""
+      //   cabData.association[i].cuisines.cuisine_id = cabData.association[i].cuisines.id + ""
+      //   cabData.association[i].collections.collection = null;
+      //   cabData.association[i].collections.image = null;
+      //   cabData.association[i].collections.desc = null;
+      //   cabData.association[i].collections.featured = null;
+      // }
 
       $scope.cab=cabData;
 
@@ -1305,7 +1307,6 @@ angular.module('comparetravel', ['angular.filter'])
 
     $scope.update = function () {
       var amenityId = $scope.cabData.amenities.id
-      // delete $scope.cab.association;
 
       delete $scope.cabData.amenities.id;
       delete $scope.cabData.amenities.cab;

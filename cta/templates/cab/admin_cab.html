@@ -135,8 +135,38 @@
                     </div>
                 </div>
 
-                 
+                <div class="row">
     
+                    <div class="col-sm-6">
+    
+                        <div class="form-group">
+                            <h4>Collection</h4>
+                            <div >
+                                <select ng-model="cab.cab_collection" ng-disabled="disable_collection">
+                                    <option value disabled selected> -- Select Collection --</option>
+    
+                                    <option value="[[collectionData.id]]" ng-repeat="collectionData in collection">[[collectionData.collection_name]]</option>
+                                </select>
+                                <!-- or
+                                <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = true" ng-disabled="disable_association">Add Collection</button> -->
+                            </div>
+                            <!-- <div ng-show="$parent.addNewCollection[$index]">
+                                <label>Collection name</label>
+                                <input type="text" ng-model="association.collections.collection" class="form-control">
+                                <label>Image</label>
+                                <input type="text" ng-model="association.collections.image" class="form-control">
+                                <label>Short description</label>
+                                <input type="text" ng-model="association.collections.desc" class="form-control">
+                                <label>featured on home page?</label>
+                                <input type="checkbox" ng-model="association.collections.featured" ng-true-value="true" ng-false-value="false">
+                                <br>
+                                <button class="btn btn-default" ng-click="$parent.addNewCollection[$index] = false;">cancel</button>
+    
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+<!--     
             </fieldset>
             <div ng-repeat="association in cab.association">
                 <button class="btn btn-danger pull-right" ng-click="cab.association.splice($index,1);" ng-if="$index != 0" ng-disabled="disable_association">remove</button>
@@ -148,7 +178,7 @@
                         <div class="form-group">
                             <h4>Collection</h4>
                             <div ng-show="!$parent.addNewCollection[$index]">
-                                <select ng-model="association.collections.collection_id" ng-disabled="disable_association">
+                                <select ng-model="association.collections.cab_collection" ng-disabled="disable_association">
                                     <option value disabled selected> -- Select Collection --</option>
     
                                     <option value="[[collectionData.id]]" ng-repeat="collectionData in collection">[[collectionData.collection_name]]</option>
@@ -203,9 +233,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <button formnovalidate class="btn btn-default" ng-click="addMoreAssociation()" ng-disabled="disable_association">Add more association</button>
+            <!-- <button formnovalidate class="btn btn-default" ng-click="addMoreAssociation()" ng-disabled="disable_association">Add more association</button> -->
     
     
 
@@ -368,7 +398,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>
-                                <input type="checkbox" ng-model="deal.one_way" ng-required="true" ng-disabled="disable_deal">One Way
+                                <input type="checkbox" ng-model="deal.one_way" ng-disabled="disable_deal">One Way
                                 </label>
             
                             </div>
@@ -376,7 +406,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>
-                                <input type="checkbox" step="any" ng-model="deal.outstation" ng-required="true" ng-disabled="disable_deal">Outstation
+                                <input type="checkbox" step="any" ng-model="deal.outstation" ng-disabled="disable_deal">Outstation
                                 </label>
                             </div>
                         </div>
@@ -386,7 +416,7 @@
                             <div class="form-group">
                                 <br>
                                 <label>
-                                    <input type="checkbox" ng-model="deal.is_partner" ng-true-value="true" ng-false-value="false" ng-required="true" ng-disabled="disable_deal">Is partner?
+                                    <input type="checkbox" ng-model="deal.is_partner"  ng-false-value="false" ng-required="true" ng-disabled="disable_deal">Is partner?
                                 </label>
                             </div>
                         </div>
